@@ -49,7 +49,8 @@ public actor MetricsCoordinator {
 
         updateTask = Task { [weak self] in
             while !Task.isCancelled {
-                await self?.collectAndNotify()
+                guard let self else { return }
+                await collectAndNotify()
                 try? await Task.sleep(nanoseconds: UInt64(interval * 1_000_000_000))
             }
         }

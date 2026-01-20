@@ -36,7 +36,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             await coordinator.start(interval: 1.0)
 
             await coordinator.setOnMetricsUpdate { [weak self] snapshot in
-                await self?.handleMetricsUpdate(snapshot)
+                guard let self else { return }
+                await handleMetricsUpdate(snapshot)
             }
         }
     }

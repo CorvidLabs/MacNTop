@@ -128,7 +128,10 @@ public actor ProcessMonitor {
         let result = proc_name(pid, &buffer, UInt32(buffer.count))
 
         if result > 0 {
-            let name = String(cString: buffer)
+            let name = buffer.withUnsafeBufferPointer { ptr in
+                guard let baseAddress = ptr.baseAddress else { return "" }
+                return String(cString: baseAddress)
+            }
             // Filter out empty or very short names
             if name.count > 2 {
                 return name

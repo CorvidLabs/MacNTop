@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MacNTop Code Review - 0xLeif</title>
+    <style>
+        :root {
+            --bg: #0d1117;
+            --card-bg: #161b22;
+            --border: #30363d;
+            --text: #c9d1d9;
+            --text-muted: #8b949e;
+            --accent: #58a6ff;
+            --green: #3fb950;
+            --yellow: #d29922;
+            --red: #f85149;
+            --purple: #a371f7;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        header {
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .reviewer {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: var(--card-bg);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .reviewer-avatar {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--purple), var(--accent));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        .reviewer-info {
+            font-size: 0.875rem;
+        }
+
+        .reviewer-name {
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .reviewer-role {
+            color: var(--text-muted);
+        }
+
+        .meta {
+            display: flex;
+            gap: 2rem;
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        .verdict {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 1rem;
+            margin-top: 1rem;
+        }
+
+        .verdict.approved {
+            background: rgba(63, 185, 80, 0.15);
+            color: var(--green);
+            border: 1px solid rgba(63, 185, 80, 0.4);
+        }
+
+        .section {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+        }
+
+        .section-header {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .section-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .section-content {
+            padding: 1.5rem;
+        }
+
+        .grade {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .grade.excellent {
+            background: rgba(63, 185, 80, 0.15);
+            color: var(--green);
+        }
+
+        .grade.good {
+            background: rgba(88, 166, 255, 0.15);
+            color: var(--accent);
+        }
+
+        .grade.needs-work {
+            background: rgba(210, 153, 34, 0.15);
+            color: var(--yellow);
+        }
+
+        .grade.poor {
+            background: rgba(248, 81, 73, 0.15);
+            color: var(--red);
+        }
+
+        .checklist {
+            list-style: none;
+        }
+
+        .checklist li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+
+        .checklist li:last-child {
+            border-bottom: none;
+        }
+
+        .check {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .check.pass {
+            background: rgba(63, 185, 80, 0.15);
+            color: var(--green);
+        }
+
+        .check.warn {
+            background: rgba(210, 153, 34, 0.15);
+            color: var(--yellow);
+        }
+
+        .check.fail {
+            background: rgba(248, 81, 73, 0.15);
+            color: var(--red);
+        }
+
+        .item-content {
+            flex: 1;
+        }
+
+        .item-title {
+            font-weight: 500;
+            color: #fff;
+        }
+
+        .item-desc {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+
+        .code-block {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 1rem;
+            font-family: 'SF Mono', 'Menlo', monospace;
+            font-size: 0.8125rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        .code-block .comment {
+            color: var(--text-muted);
+        }
+
+        .code-block .keyword {
+            color: var(--purple);
+        }
+
+        .code-block .type {
+            color: var(--accent);
+        }
+
+        .code-block .string {
+            color: var(--green);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-card {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 0.25rem;
+        }
+
+        .issues-list {
+            list-style: none;
+        }
+
+        .issue {
+            padding: 1rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            margin-bottom: 0.75rem;
+            background: var(--bg);
+        }
+
+        .issue:last-child {
+            margin-bottom: 0;
+        }
+
+        .issue-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .issue-title {
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .priority {
+            font-size: 0.75rem;
+            padding: 0.125rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        .priority.high {
+            background: rgba(248, 81, 73, 0.15);
+            color: var(--red);
+        }
+
+        .priority.medium {
+            background: rgba(210, 153, 34, 0.15);
+            color: var(--yellow);
+        }
+
+        .priority.low {
+            background: rgba(88, 166, 255, 0.15);
+            color: var(--accent);
+        }
+
+        .issue-location {
+            font-family: 'SF Mono', monospace;
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .issue-desc {
+            font-size: 0.875rem;
+            color: var(--text);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            font-weight: 600;
+            color: #fff;
+            background: var(--bg);
+        }
+
+        td {
+            font-size: 0.875rem;
+        }
+
+        .summary-box {
+            background: linear-gradient(135deg, rgba(63, 185, 80, 0.1), rgba(88, 166, 255, 0.1));
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .summary-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 1rem;
+        }
+
+        .summary-text {
+            font-size: 0.9375rem;
+            line-height: 1.7;
+        }
+
+        .highlight {
+            color: var(--green);
+            font-weight: 500;
+        }
+
+        .architecture-diagram {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 1.5rem;
+            font-family: 'SF Mono', monospace;
+            font-size: 0.75rem;
+            line-height: 1.4;
+            overflow-x: auto;
+            color: var(--accent);
+        }
+
+        footer {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        .signature {
+            font-style: italic;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-top">
+                <div>
+                    <h1>MacNTop Code Review</h1>
+                    <div class="meta">
+                        <span>Repository: CorvidLabs/MacNTop</span>
+                        <span>Branch: main</span>
+                        <span>Commit: 3240518</span>
+                    </div>
+                </div>
+                <div class="reviewer">
+                    <div class="reviewer-avatar">0x</div>
+                    <div class="reviewer-info">
+                        <div class="reviewer-name">0xLeif</div>
+                        <div class="reviewer-role">Lead Swift Architect</div>
+                    </div>
+                </div>
+            </div>
+            <div class="verdict approved">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"/>
+                </svg>
+                APPROVED WITH SUGGESTIONS
+            </div>
+        </header>
+
+        <!-- Project Stats -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value">30</div>
+                <div class="stat-label">Swift Files</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">~3.5k</div>
+                <div class="stat-label">Lines of Code</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">14</div>
+                <div class="stat-label">Unit Tests</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">6</div>
+                <div class="stat-label">Themes</div>
+            </div>
+        </div>
+
+        <!-- Architecture -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-title">Architecture</span>
+                <span class="grade excellent">Excellent</span>
+            </div>
+            <div class="section-content">
+                <p style="margin-bottom: 1rem;">Clean actor-based concurrency architecture with proper isolation boundaries. The MetricsCoordinator acts as the central orchestrator, collecting from isolated service actors and delivering Sendable snapshots to the UI layer.</p>
+
+                <div class="architecture-diagram">
+<pre>
+                    @MainActor
+                 ┌──────────────┐
+                 │  AppDelegate │
+                 └──────┬───────┘
+                        │
+                        ▼
+┌─────────────────────────────────────────────────────────┐
+│              actor MetricsCoordinator                   │
+│  ┌─────────────────────────────────────────────────┐   │
+│  │  async let cpu = cpuMonitor.collect()           │   │
+│  │  async let mem = memoryMonitor.collect()        │   │
+│  │  async let net = networkMonitor.collect()       │   │
+│  │  async let disk = diskMonitor.collect()         │   │
+│  │  async let proc = processMonitor.collect()      │   │
+│  └─────────────────────────────────────────────────┘   │
+└────────────────────────┬────────────────────────────────┘
+                         │
+    ┌────────────────────┼────────────────────┐
+    ▼                    ▼                    ▼
+┌────────┐         ┌──────────┐         ┌──────────┐
+│actor   │         │actor     │         │actor     │
+│CPU     │         │Memory    │         │Network   │  ... + Disk, Process
+│Monitor │         │Monitor   │         │Monitor   │
+└────────┘         └──────────┘         └──────────┘
+                         │
+                         ▼
+              ┌─────────────────────┐
+              │ MetricsSnapshot     │
+              │ (Sendable)          │
+              └──────────┬──────────┘
+                         │
+                         ▼
+              ┌─────────────────────┐
+              │  @MainActor Views   │
+              └─────────────────────┘
+</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Concurrency Compliance -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-title">Swift 6 Concurrency Compliance</span>
+                <span class="grade excellent">Excellent</span>
+            </div>
+            <div class="section-content">
+                <ul class="checklist">
+                    <li>
+                        <span class="check pass">&#10003;</span>
+                        <div class="item-content">
+                            <div class="item-title">Actor Isolation</div>
+                            <div class="item-desc">All monitoring services properly implemented as <code>public actor</code>. MetricsCoordinator, CPUMonitor, MemoryMonitor, NetworkMonitor, DiskMonitor, ProcessMonitor all correctly isolated.</div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="check pass">&#10003;</span>
+                        <div class="item-content">
+                            <div class="item-title">Sendable Conformance</div>
+                            <div class="item-desc">All types crossing concurrency boundaries explicitly conform to <code>Sendable</code>. CPUMetrics, MemoryMetrics, NetworkMetrics, DiskMetrics, ProcessItem, MetricsSnapshot, ThemeColors, HistoricalData&lt;Value: Sendable&gt; all properly marked.</div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="check pass">&#10003;</span>
+                        <div class="item-content">
+                            <div class="item-title">@Sendable Closures</div>
+                            <div class="item-desc">Callbacks crossing actor boundaries properly annotated: <code>@Sendable (MetricsSnapshot) async -> Void</code></div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="check pass">&#10003;</span>
+                        <div class="item-content">
+                            <div class="item-title">@MainActor Usage</div>
+                            <div class="item-desc">UI classes correctly isolated: AppDelegate, StatusBarController, AppTheme static methods, all view classes. MetricsCoordinator correctly NOT @MainActor.</div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="check pass">&#10003;</span>
+                        <div class="item-content">
+                            <div class="item-title">Async/Await Only</div>
+                            <div class="item-desc">Zero completion handlers. All async operations use async/await. Parallel collection via <code>async let</code>.</div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="check pass">&#10003;</span>
+                        <div class="item-content">
+                            <div class="item-title">Weak Self Captures</div>
+                            <div class="item-desc"><code>[weak self]</code> used in escaping closures. Actor deinit properly wraps cleanup in Task.</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Code Style -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-title">CorvidLabs Code Style</span>
+                <span class="grade good">Good</span>
+            </div>
+            <div class="section-content">
+                <ul class="checklist">
+                    <li>
+                        <span class="check pass">&#10003;</span>
+                        <div class="item-content">
+                            <div class="item-title">K&R Brace Style</div>
+                            <div class="item-desc">100% consistent. All opening braces on same line: <code>func foo() {</code></div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="check pass">&#10003;</span>
+                        <div class="item-content">
+                            <div class="item-title">No Force Unwraps</div>
+                            <div class="item-desc">Zero instances of <code>!</code>, <code>try!</code>, or <code>as!</code>. All nil handling via optional chaining, guard, or nil coalescing.</div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="check pass">&#10003;</span>
+                        <div class="item-content">
+                            <div class="item-title">Descriptive Generic Names</div>
+                            <div class="item-desc">Uses <code>Value</code> instead of <code>T</code> in HistoricalData&lt;Value&gt;.</div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="check warn">!</span>
+                        <div class="item-content">
+                            <div class="item-title">Access Control</div>
+                            <div class="item-desc">Most declarations properly marked, but some internal helper methods missing <code>private</code> modifier. See issues below.</div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="check pass">&#10003;</span>
+                        <div class="item-content">
+                            <div class="item-title">MARK Sections</div>
+                            <div class="item-desc">Proper use of <code>// MARK: -</code> for Properties, Initialization, Setup, Configuration, Private Methods.</div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="check pass">&#10003;</span>
+                        <div class="item-content">
+                            <div class="item-title">Documentation</div>
+                            <div class="item-desc">DocC documentation present. All public APIs documented with <code>///</code> comments.</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- AppState Integration -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-title">AppState Integration</span>
+                <span class="grade excellent">Excellent</span>
+            </div>
+            <div class="section-content">
+                <p style="margin-bottom: 1rem;">Clean integration using StoredState for theme persistence. Properly follows the AppState pattern with extension on Application.</p>
+
+                <div class="code-block">
+<span class="keyword">extension</span> <span class="type">Application</span> {
+    <span class="keyword">var</span> themeName: <span class="type">StoredState</span>&lt;<span class="type">String</span>&gt; {
+        storedState(initial: <span class="string">"Retro Green"</span>, id: <span class="string">"selectedTheme"</span>)
+    }
+}
+
+<span class="keyword">public enum</span> <span class="type">AppTheme</span> {
+    <span class="keyword">@MainActor</span>
+    <span class="keyword">public static var</span> current: <span class="type">ThemeColors</span> {
+        <span class="keyword">let</span> storedState = <span class="type">Application</span>.storedState(\.<span class="type">themeName</span>)
+        <span class="keyword">let</span> themeName = storedState.value
+        <span class="keyword">return</span> <span class="type">Themes</span>.all.first { $0.name == themeName } ?? <span class="type">Themes</span>.retroGreen
+    }
+
+    <span class="keyword">@MainActor</span>
+    <span class="keyword">public static func</span> setTheme(_ theme: <span class="type">ThemeColors</span>) {
+        <span class="keyword">var</span> storedState = <span class="type">Application</span>.storedState(\.<span class="type">themeName</span>)
+        storedState.value = theme.name
+        <span class="type">NotificationCenter</span>.default.post(name: .themeChanged, object: theme)
+    }
+}
+                </div>
+
+                <ul class="checklist" style="margin-top: 1rem;">
+                    <li>
+                        <span class="check pass">&#10003;</span>
+                        <div class="item-content">
+                            <div class="item-title">StoredState for Persistence</div>
+                            <div class="item-desc">Theme selection persists across app launches using UserDefaults-backed storage.</div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="check pass">&#10003;</span>
+                        <div class="item-content">
+                            <div class="item-title">@MainActor on Accessors</div>
+                            <div class="item-desc">UI-related state access properly isolated to main actor.</div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="check pass">&#10003;</span>
+                        <div class="item-content">
+                            <div class="item-title">Notification-based Updates</div>
+                            <div class="item-desc">Theme changes broadcast via NotificationCenter, UI components observe and refresh.</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Test Coverage -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-title">Test Coverage</span>
+                <span class="grade needs-work">Needs Work</span>
+            </div>
+            <div class="section-content">
+                <p style="margin-bottom: 1rem;">Basic model tests present using Swift Testing framework. Coverage is minimal but tests are well-structured.</p>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Test Suite</th>
+                            <th>Tests</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>ByteFormatter</td>
+                            <td>4 tests (bytes, rate, uptime, percent)</td>
+                            <td><span class="grade excellent">Pass</span></td>
+                        </tr>
+                        <tr>
+                            <td>HistoricalData</td>
+                            <td>3 tests (capacity, latest, empty)</td>
+                            <td><span class="grade excellent">Pass</span></td>
+                        </tr>
+                        <tr>
+                            <td>Themes</td>
+                            <td>3 tests (unique names, count, default)</td>
+                            <td><span class="grade excellent">Pass</span></td>
+                        </tr>
+                        <tr>
+                            <td>CPUMetrics</td>
+                            <td>2 tests (average, core total)</td>
+                            <td><span class="grade excellent">Pass</span></td>
+                        </tr>
+                        <tr>
+                            <td>MemoryMetrics</td>
+                            <td>2 tests (used, pressure)</td>
+                            <td><span class="grade excellent">Pass</span></td>
+                        </tr>
+                        <tr>
+                            <td style="color: var(--text-muted);">Services (CPU, Memory, etc.)</td>
+                            <td style="color: var(--text-muted);">0 tests</td>
+                            <td><span class="grade poor">Missing</span></td>
+                        </tr>
+                        <tr>
+                            <td style="color: var(--text-muted);">MetricsCoordinator</td>
+                            <td style="color: var(--text-muted);">0 tests</td>
+                            <td><span class="grade poor">Missing</span></td>
+                        </tr>
+                        <tr>
+                            <td style="color: var(--text-muted);">Integration</td>
+                            <td style="color: var(--text-muted);">0 tests</td>
+                            <td><span class="grade poor">Missing</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p style="margin-top: 1rem; color: var(--text-muted);">Recommendation: Add service layer tests with mock data injection, and integration tests for theme persistence.</p>
+            </div>
+        </div>
+
+        <!-- Issues Found -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-title">Issues Found</span>
+            </div>
+            <div class="section-content">
+                <ul class="issues-list">
+                    <li class="issue">
+                        <div class="issue-header">
+                            <span class="issue-title">Missing access control on helper methods</span>
+                            <span class="priority medium">Medium</span>
+                        </div>
+                        <div class="issue-location">CPUView.swift:231, DiskView.swift:180, MemoryView.swift:158</div>
+                        <div class="issue-desc">
+                            Helper methods in private view classes should be marked <code>private</code>. While the containing class is <code>private</code>, explicit access control on methods follows CorvidLabs conventions.
+                            <div class="code-block" style="margin-top: 0.75rem;">
+<span class="comment">// Current:</span>
+<span class="keyword">func</span> update(usage: <span class="type">Double</span>, coreIndex: <span class="type">Int</span>) { ... }
+
+<span class="comment">// Should be:</span>
+<span class="keyword">private func</span> update(usage: <span class="type">Double</span>, coreIndex: <span class="type">Int</span>) { ... }
+                            </div>
+                        </div>
+                    </li>
+                    <li class="issue">
+                        <div class="issue-header">
+                            <span class="issue-title">Guard clause after weak self capture</span>
+                            <span class="priority low">Low</span>
+                        </div>
+                        <div class="issue-location">MetricsCoordinator.swift:50, AppDelegate.swift:38</div>
+                        <div class="issue-desc">
+                            Some weak self captures use optional chaining (<code>self?.</code>) instead of guard-let pattern. While functionally correct, the explicit guard pattern is preferred for clarity.
+                            <div class="code-block" style="margin-top: 0.75rem;">
+<span class="comment">// Current (acceptable):</span>
+{ [<span class="keyword">weak self</span>] snapshot <span class="keyword">in</span>
+    <span class="keyword">await self</span>?.handleMetricsUpdate(snapshot)
+}
+
+<span class="comment">// Preferred:</span>
+{ [<span class="keyword">weak self</span>] snapshot <span class="keyword">in</span>
+    <span class="keyword">guard let self else</span> { <span class="keyword">return</span> }
+    <span class="keyword">await</span> handleMetricsUpdate(snapshot)
+}
+                            </div>
+                        </div>
+                    </li>
+                    <li class="issue">
+                        <div class="issue-header">
+                            <span class="issue-title">Deprecation warning in SystemInfoService</span>
+                            <span class="priority low">Low</span>
+                        </div>
+                        <div class="issue-location">SystemInfoService.swift:158</div>
+                        <div class="issue-desc">
+                            <code>String(cString:)</code> is deprecated. Use <code>String(decoding: array, as: UTF8.self)</code> after truncating null termination.
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Summary Table -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-title">Compliance Summary</span>
+            </div>
+            <div class="section-content">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Requirement</th>
+                            <th>Status</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Swift 6.0 Minimum</td>
+                            <td><span class="grade excellent">Pass</span></td>
+                            <td>swift-tools-version:6.0, .swiftLanguageMode(.v6)</td>
+                        </tr>
+                        <tr>
+                            <td>Explicit Access Control</td>
+                            <td><span class="grade good">Mostly</span></td>
+                            <td>Some helper methods missing private</td>
+                        </tr>
+                        <tr>
+                            <td>K&R Brace Style</td>
+                            <td><span class="grade excellent">Pass</span></td>
+                            <td>100% consistent</td>
+                        </tr>
+                        <tr>
+                            <td>No Force Unwraps</td>
+                            <td><span class="grade excellent">Pass</span></td>
+                            <td>Zero instances</td>
+                        </tr>
+                        <tr>
+                            <td>Async/Await Only</td>
+                            <td><span class="grade excellent">Pass</span></td>
+                            <td>No completion handlers</td>
+                        </tr>
+                        <tr>
+                            <td>Sendable Conformance</td>
+                            <td><span class="grade excellent">Pass</span></td>
+                            <td>All crossing types marked</td>
+                        </tr>
+                        <tr>
+                            <td>@Sendable Closures</td>
+                            <td><span class="grade excellent">Pass</span></td>
+                            <td>Properly annotated</td>
+                        </tr>
+                        <tr>
+                            <td>Descriptive Generics</td>
+                            <td><span class="grade excellent">Pass</span></td>
+                            <td>Value instead of T</td>
+                        </tr>
+                        <tr>
+                            <td>Documentation</td>
+                            <td><span class="grade excellent">Pass</span></td>
+                            <td>DocC + inline docs</td>
+                        </tr>
+                        <tr>
+                            <td>Unit Tests</td>
+                            <td><span class="grade needs-work">Basic</span></td>
+                            <td>14 tests, need service coverage</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Final Summary -->
+        <div class="summary-box">
+            <div class="summary-title">Review Summary</div>
+            <div class="summary-text">
+                This is a <span class="highlight">well-architected Swift 6 application</span> that demonstrates strong understanding of modern Swift concurrency patterns. The actor-based monitoring services with proper Sendable types and @MainActor UI isolation is exactly what we want to see.
+                <br><br>
+                The AppState integration is clean and follows the intended usage pattern. Theme persistence works correctly with StoredState.
+                <br><br>
+                <strong>What I particularly liked:</strong>
+                <ul style="margin-top: 0.5rem; margin-left: 1.5rem;">
+                    <li>Clean separation between data collection (actors) and presentation (@MainActor views)</li>
+                    <li>Parallel metric collection using <code>async let</code></li>
+                    <li>Zero force unwraps throughout the entire codebase</li>
+                    <li>Proper use of Sendable closures for cross-actor callbacks</li>
+                    <li>DocC documentation with architecture diagrams</li>
+                </ul>
+                <br>
+                <strong>Areas for improvement:</strong>
+                <ul style="margin-top: 0.5rem; margin-left: 1.5rem;">
+                    <li>Add explicit <code>private</code> to helper methods even in private classes</li>
+                    <li>Expand test coverage to include service layer and integration tests</li>
+                    <li>Fix the String(cString:) deprecation warning</li>
+                </ul>
+                <br>
+                Overall, this meets CorvidLabs standards and is <span class="highlight">approved for merge</span>. The suggested improvements are minor and can be addressed in follow-up commits.
+            </div>
+        </div>
+
+        <footer>
+            <div>Review completed on January 19, 2026</div>
+            <div class="signature">- 0xLeif</div>
+        </footer>
+    </div>
+</body>
+</html>

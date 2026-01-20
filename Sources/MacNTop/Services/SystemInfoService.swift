@@ -118,7 +118,10 @@ public actor SystemInfoService {
                 socklen_t(0),
                 NI_NUMERICHOST
             )
-            address = String(cString: hostname)
+            address = hostname.withUnsafeBufferPointer { buffer in
+                guard let baseAddress = buffer.baseAddress else { return "127.0.0.1" }
+                return String(cString: baseAddress)
+            }
             break
         }
 
@@ -155,6 +158,9 @@ public actor SystemInfoService {
         var buffer = [CChar](repeating: 0, count: size)
         sysctlbyname(name, &buffer, &size, nil, 0)
 
-        return String(cString: buffer)
+        return buffer.withUnsafeBufferPointer { ptr in
+            guard let baseAddress = ptr.baseAddress else { return nil }
+            return String(cString: baseAddress)
+        }
     }
 }
