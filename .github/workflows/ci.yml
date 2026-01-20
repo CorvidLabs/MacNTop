@@ -1,0 +1,80 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build & Test
+    runs-on: macos-14
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Swift
+        uses: swift-actions/setup-swift@v2
+        with:
+          swift-version: "5.9"
+
+      - name: Build
+        run: swift build -c release
+
+      - name: Test
+        run: swift test
+        continue-on-error: true  # Tests may not exist yet
+
+  lint:
+    name: Swift Format
+    runs-on: macos-14
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Swift
+        uses: swift-actions/setup-swift@v2
+        with:
+          swift-version: "5.9"
+
+      - name: Check formatting
+        run: |
+          if command -v swift-format &> /dev/null; then
+            swift-format lint --recursive Sources/
+          else
+            echo "swift-format not installed, skipping"
+          fi
+        continue-on-error: true
+
+  docs:
+    name: Documentation
+    runs-on: macos-14
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Swift
+        uses: swift-actions/setup-swift@v2
+        with:
+          swift-version: "5.9"
+
+      - name: Generate Documentation
+        run: |
+          swift package generate-documentation \
+            --target MacNTop \
+            --disable-indexing \
+            --transform-for-static-hosting \
+            --output-path docs-output
+        continue-on-error: true
+
+      - name: Upload Documentation
+        uses: actions/upload-artifact@v4
+        with:
+          name: documentation
+          path: docs-output
+        if: success()

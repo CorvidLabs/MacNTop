@@ -1,0 +1,33 @@
+// swift-tools-version:5.9
+
+import PackageDescription
+
+let package = Package(
+    name: "MacNTop",
+    platforms: [
+        .macOS(.v11)
+    ],
+    products: [
+        .executable(name: "MacNTop", targets: ["MacNTop"])
+    ],
+    dependencies: [
+        .package(url: "https://github.com/0xLeif/AppState.git", from: "1.0.0")
+    ],
+    targets: [
+        .executableTarget(
+            name: "MacNTop",
+            dependencies: [
+                .product(name: "AppState", package: "AppState")
+            ],
+            path: "Sources/MacNTop",
+            swiftSettings: [
+                .enableExperimentalFeature("StrictConcurrency")
+            ],
+            linkerSettings: [
+                .linkedFramework("AppKit"),
+                .linkedFramework("IOKit"),
+                .linkedFramework("Metal")
+            ]
+        )
+    ]
+)

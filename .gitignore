@@ -1,0 +1,38 @@
+# Xcode
+*.xcodeproj/
+*.xcworkspace/
+xcuserdata/
+*.xccheckout
+*.xcscmblueprint
+DerivedData/
+
+# Swift Package Manager
+.build/
+.swiftpm/
+Package.resolved
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# IDE
+*.idea/
+*.vscode/
+
+# Build artifacts
+*.app
+*.dSYM.zip
+*.dSYM
+
+# Documentation
+.docc-build/
+
+# Secrets
+.env
+*.pem
+*.p12
+
+# Code Review HTML (generated)
+CODE_REVIEW.html
