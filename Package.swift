@@ -1,11 +1,11 @@
-// swift-tools-version:5.9
+// swift-tools-version:6.0
 
 import PackageDescription
 
 let package = Package(
     name: "MacNTop",
     platforms: [
-        .macOS(.v11)
+        .macOS(.v14)
     ],
     products: [
         .executable(name: "MacNTop", targets: ["MacNTop"])
@@ -21,7 +21,7 @@ let package = Package(
             ],
             path: "Sources/MacNTop",
             swiftSettings: [
-                .enableExperimentalFeature("StrictConcurrency")
+                .swiftLanguageMode(.v6)
             ],
             linkerSettings: [
                 .linkedFramework("AppKit"),

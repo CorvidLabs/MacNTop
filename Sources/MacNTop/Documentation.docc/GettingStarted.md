@@ -10,9 +10,9 @@ MacNTop is a Swift-based macOS menu bar app that provides real-time system monit
 
 ### Requirements
 
-- macOS 11.0 or later
-- Swift 5.9 or later
-- Xcode 15+ (optional, for IDE features)
+- macOS 14.0 or later
+- Swift 6.0 or later
+- Xcode 16+ (optional, for IDE features)
 
 ### From Command Line
 

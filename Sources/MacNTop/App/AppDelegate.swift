@@ -1,6 +1,7 @@
 import AppKit
 
 /// Main application delegate.
+@MainActor
 final class AppDelegate: NSObject, NSApplicationDelegate {
     // MARK: - Properties
 
@@ -30,21 +31,16 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private func startMonitoring() {
         guard let coordinator = metricsCoordinator else { return }
 
-        Task { @MainActor [weak self] in
-            guard let self else { return }
-
-            self.cachedSystemInfo = await coordinator.getSystemInfo()
+        Task {
+            cachedSystemInfo = await coordinator.getSystemInfo()
             await coordinator.start(interval: 1.0)
 
             await coordinator.setOnMetricsUpdate { [weak self] snapshot in
-                Task { @MainActor in
-                    self?.handleMetricsUpdate(snapshot)
-                }
+                await self?.handleMetricsUpdate(snapshot)
             }
         }
     }
 
-    @MainActor
     private func handleMetricsUpdate(_ snapshot: MetricsSnapshot) {
         statusBarController?.updateIcon(
             cpuUsage: snapshot.cpu.averageUsage,

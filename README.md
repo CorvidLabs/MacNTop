@@ -2,8 +2,8 @@
 
 A macOS menu bar system monitor with retro CRT terminal aesthetics.
 
-[![Swift 5.9+](https://img.shields.io/badge/Swift-5.9+-orange.svg)](https://swift.org)
-[![macOS 11+](https://img.shields.io/badge/macOS-11+-blue.svg)](https://www.apple.com/macos)
+[![Swift 6.0+](https://img.shields.io/badge/Swift-6.0+-orange.svg)](https://swift.org)
+[![macOS 14+](https://img.shields.io/badge/macOS-14+-blue.svg)](https://www.apple.com/macos)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 <p align="center">
@@ -36,8 +36,8 @@ A macOS menu bar system monitor with retro CRT terminal aesthetics.
 ## Installation
 
 ### Requirements
-- macOS 11.0 (Big Sur) or later
-- Xcode 15+ (for building)
+- macOS 14.0 (Sonoma) or later
+- Swift 6.0+ / Xcode 16+ (for building)
 
 ### Build from Source
 

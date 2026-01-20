@@ -1,5 +1,7 @@
 import Foundation
 
+// MARK: - MemoryMonitor
+
 /// Monitor for memory usage metrics using host_statistics64.
 public actor MemoryMonitor {
     // MARK: - Properties
@@ -43,7 +45,8 @@ public actor MemoryMonitor {
             )
         }
 
-        let pageSize = UInt64(vm_kernel_page_size)
+        // Use getpagesize() which is concurrency-safe
+        let pageSize = UInt64(getpagesize())
 
         let active = UInt64(stats.active_count) * pageSize
         let wired = UInt64(stats.wire_count) * pageSize
