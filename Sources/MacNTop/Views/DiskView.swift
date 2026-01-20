@@ -185,12 +185,11 @@ private final class DiskVolumeView: NSView {
         usageLabel.textColor = color
         barFill.layer?.backgroundColor = color.cgColor
 
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-            let barWidth = self.barContainer.bounds.width
-            let fillWidth = barWidth * CGFloat(volume.usagePercent / 100.0)
-            self.fillWidthConstraint?.constant = max(0, fillWidth)
-        }
+        // Already on MainActor - update constraint directly
+        layoutSubtreeIfNeeded()
+        let barWidth = barContainer.bounds.width
+        let fillWidth = barWidth * CGFloat(volume.usagePercent / 100.0)
+        fillWidthConstraint?.constant = max(0, fillWidth)
     }
 
     private func colorForUsage(_ percent: Double) -> NSColor {

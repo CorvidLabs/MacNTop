@@ -28,6 +28,14 @@ let package = Package(
                 .linkedFramework("IOKit"),
                 .linkedFramework("Metal")
             ]
+        ),
+        .testTarget(
+            name: "MacNTopTests",
+            dependencies: ["MacNTop"],
+            path: "Tests/MacNTopTests",
+            swiftSettings: [
+                .swiftLanguageMode(.v6)
+            ]
         )
     ]
 )
