@@ -10,15 +10,16 @@ public final class StatusBarController {
     private let iconRenderer = StatusBarIconRenderer()
 
     private var dashboardViewController: DashboardViewController?
+    private var dashboardWindow: DashboardWindow?
     private var eventMonitor: Any?
 
     // MARK: - Initialization
 
     public init() {
-        observeThemeChanges()
+        observeNotifications()
     }
 
-    private func observeThemeChanges() {
+    private func observeNotifications() {
         NotificationCenter.default.addObserver(
             forName: .themeChanged,
             object: nil,
@@ -26,6 +27,16 @@ public final class StatusBarController {
         ) { [weak self] _ in
             Task { @MainActor in
                 self?.recreatePopover()
+            }
+        }
+
+        NotificationCenter.default.addObserver(
+            forName: .dashboardWindowClosed,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            Task { @MainActor in
+                self?.dashboardWindow = nil
             }
         }
     }
@@ -77,6 +88,27 @@ public final class StatusBarController {
     /// Updates the dashboard with new metrics.
     public func updateDashboard(with snapshot: MetricsSnapshot, systemInfo: SystemInfo) {
         dashboardViewController?.updateMetrics(snapshot: snapshot, systemInfo: systemInfo)
+        dashboardWindow?.updateMetrics(snapshot: snapshot, systemInfo: systemInfo)
+    }
+
+    /// Opens the dashboard in a standalone window.
+    public func openWindow() {
+        if dashboardWindow == nil {
+            dashboardWindow = DashboardWindow()
+        }
+        dashboardWindow?.showWindow()
+        hidePopover()
+    }
+
+    /// Closes the dashboard window.
+    public func closeWindow() {
+        dashboardWindow?.close()
+        dashboardWindow = nil
+    }
+
+    /// Returns whether the dashboard window is currently open.
+    public var isWindowOpen: Bool {
+        dashboardWindow?.isVisible == true
     }
 
     /// Shows the popover.
@@ -100,6 +132,8 @@ public final class StatusBarController {
             NSEvent.removeMonitor(monitor)
             eventMonitor = nil
         }
+        dashboardWindow?.close()
+        dashboardWindow = nil
         statusItem = nil
         popover = nil
     }
@@ -142,6 +176,15 @@ public final class StatusBarController {
     private func showContextMenu(from button: NSStatusBarButton) {
         let menu = NSMenu()
 
+        // Window mode toggle
+        if isWindowOpen {
+            menu.addItem(NSMenuItem(title: "Close Window", action: #selector(toggleWindowMode), keyEquivalent: "w"))
+        } else {
+            menu.addItem(NSMenuItem(title: "Open in Window", action: #selector(toggleWindowMode), keyEquivalent: "w"))
+        }
+
+        menu.addItem(NSMenuItem.separator())
+
         // Theme submenu
         let themeMenu = NSMenu()
         let currentTheme = AppTheme.current
@@ -176,6 +219,15 @@ public final class StatusBarController {
     private func selectTheme(_ sender: NSMenuItem) {
         guard let theme = sender.representedObject as? ThemeColors else { return }
         AppTheme.setTheme(theme)
+    }
+
+    @objc
+    private func toggleWindowMode() {
+        if isWindowOpen {
+            closeWindow()
+        } else {
+            openWindow()
+        }
     }
 
     @objc
