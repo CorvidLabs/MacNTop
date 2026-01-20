@@ -48,6 +48,18 @@ C:28% M:55%
 - **Left-click** opens the dashboard popover
 - **Right-click** opens the context menu
 
+### Window Mode
+
+Open the dashboard in a persistent floating window:
+
+1. Right-click the menu bar icon
+2. Select "Open in Window"
+3. The dashboard appears in a floating window that:
+   - Stays on top of other windows
+   - Works across all spaces/desktops
+   - Receives live metric updates
+4. Right-click → "Close Window" to return to popover mode
+
 ### Dashboard
 
 The dashboard displays:

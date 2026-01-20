@@ -65,13 +65,27 @@ Or after building:
 
 ### Menu Bar
 - **Left-click** - Toggle the dashboard popover
-- **Right-click** - Open context menu (Theme selection, About, Quit)
+- **Right-click** - Open context menu
+
+### Context Menu Options
+- **Open in Window** - Detach dashboard to a floating window
+- **Theme** - Select from 6 color themes
+- **About MacNTop** - Version info
+- **Quit MacNTop** - Exit the app
+
+### Window Mode
+The dashboard can be opened in a standalone floating window that stays on top:
+- Right-click → "Open in Window"
+- Window persists across spaces
+- Receives live updates like the popover
+- Right-click → "Close Window" to return to popover-only mode
 
 ### Dashboard
 - **CPU/MEM toggle** in process list - Click to sort by CPU or Memory
 - Scroll to see all sections
 
 ### Keyboard Shortcuts
+- **⌘W** - Toggle window mode (from context menu)
 - **⌘Q** - Quit (from context menu)
 
 ## Architecture
@@ -83,15 +97,19 @@ MacNTop/
 │   │   ├── AppDelegate.swift          # Entry point
 │   │   └── Application+State.swift    # AppState theme management
 │   ├── MenuBar/
-│   │   ├── StatusBarController.swift  # NSStatusItem + popover
+│   │   ├── StatusBarController.swift  # NSStatusItem + popover + window
 │   │   └── StatusBarIconRenderer.swift
 │   ├── Models/                        # Sendable data models
 │   ├── Services/                      # Actor-based monitors
 │   ├── Core/
 │   │   └── MetricsCoordinator.swift   # Orchestrates collection
-│   ├── Views/                         # AppKit views
+│   ├── Views/
+│   │   ├── DashboardWindow.swift      # Standalone floating window
+│   │   ├── DashboardView.swift        # Main dashboard layout
+│   │   └── ...                        # Component views
 │   └── Utilities/
 │       └── ByteFormatter.swift
+├── Tests/MacNTopTests/                # Unit tests
 └── Package.swift
 ```
 

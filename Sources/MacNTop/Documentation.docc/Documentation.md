@@ -47,7 +47,9 @@ MacNTop provides real-time system monitoring in a retro-styled popover accessibl
 
 ### Views
 
+- ``DashboardWindow``
 - ``DashboardView``
+- ``DashboardViewController``
 - ``CPUView``
 - ``MemoryView``
 - ``NetworkView``
