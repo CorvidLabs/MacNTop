@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MacNTop Final Code Review - 0xLeif</title>
+    <style>
+        :root {
+            --bg: #0d1117;
+            --card-bg: #161b22;
+            --border: #30363d;
+            --text: #c9d1d9;
+            --text-muted: #8b949e;
+            --accent: #58a6ff;
+            --green: #3fb950;
+            --yellow: #d29922;
+            --red: #f85149;
+            --purple: #a371f7;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 2rem;
+        }
+
+        .container { max-width: 1100px; margin: 0 auto; }
+
+        header {
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        h1 { font-size: 2rem; font-weight: 600; color: #fff; }
+
+        .reviewer {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: var(--card-bg);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .reviewer-avatar {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--green), var(--accent));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.875rem;
+        }
+
+        .reviewer-name { font-weight: 600; color: #fff; }
+        .reviewer-role { color: var(--text-muted); font-size: 0.875rem; }
+
+        .meta {
+            display: flex;
+            gap: 2rem;
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        .verdict {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 1.125rem;
+            margin-top: 1rem;
+        }
+
+        .verdict.approved {
+            background: rgba(63, 185, 80, 0.15);
+            color: var(--green);
+            border: 1px solid rgba(63, 185, 80, 0.4);
+        }
+
+        .section {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+        }
+
+        .section-header {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .section-title { font-size: 1.125rem; font-weight: 600; color: #fff; }
+        .section-content { padding: 1.5rem; }
+
+        .grade {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .grade.excellent { background: rgba(63, 185, 80, 0.15); color: var(--green); }
+        .grade.good { background: rgba(88, 166, 255, 0.15); color: var(--accent); }
+        .grade.needs-work { background: rgba(210, 153, 34, 0.15); color: var(--yellow); }
+
+        .checklist { list-style: none; }
+
+        .checklist li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+
+        .checklist li:last-child { border-bottom: none; }
+
+        .check {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 2px;
+            font-size: 0.75rem;
+        }
+
+        .check.pass { background: rgba(63, 185, 80, 0.15); color: var(--green); }
+        .check.warn { background: rgba(210, 153, 34, 0.15); color: var(--yellow); }
+
+        .item-content { flex: 1; }
+        .item-title { font-weight: 500; color: #fff; }
+        .item-desc { font-size: 0.875rem; color: var(--text-muted); margin-top: 0.25rem; }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-card {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .stat-value { font-size: 1.75rem; font-weight: 600; color: #fff; }
+        .stat-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 0.25rem;
+        }
+
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 0.75rem 1rem; text-align: left; border-bottom: 1px solid var(--border); }
+        th { font-weight: 600; color: #fff; background: var(--bg); }
+        td { font-size: 0.875rem; }
+
+        .code-block {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 1rem;
+            font-family: 'SF Mono', 'Menlo', monospace;
+            font-size: 0.8125rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        .code-block .keyword { color: var(--purple); }
+        .code-block .type { color: var(--accent); }
+        .code-block .string { color: var(--green); }
+        .code-block .comment { color: var(--text-muted); }
+
+        .summary-box {
+            background: linear-gradient(135deg, rgba(63, 185, 80, 0.1), rgba(88, 166, 255, 0.1));
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .summary-title { font-size: 1rem; font-weight: 600; color: #fff; margin-bottom: 1rem; }
+        .summary-text { font-size: 0.9375rem; line-height: 1.7; }
+        .highlight { color: var(--green); font-weight: 500; }
+
+        .new-feature {
+            background: rgba(163, 113, 247, 0.1);
+            border: 1px solid rgba(163, 113, 247, 0.3);
+            border-radius: 6px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .new-feature-title {
+            color: var(--purple);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        .signature { font-style: italic; margin-top: 1rem; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-top">
+                <div>
+                    <h1>MacNTop Final Code Review</h1>
+                    <div class="meta">
+                        <span>Repository: CorvidLabs/MacNTop</span>
+                        <span>Branch: feature/window-mode</span>
+                        <span>PR: #1</span>
+                    </div>
+                </div>
+                <div class="reviewer">
+                    <div class="reviewer-avatar">0x</div>
+                    <div>
+                        <div class="reviewer-name">0xLeif</div>
+                        <div class="reviewer-role">Lead Swift Architect</div>
+                    </div>
+                </div>
+            </div>
+            <div class="verdict approved">
+                <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"/>
+                </svg>
+                APPROVED - SHIP IT
+            </div>
+        </header>
+
+        <!-- Stats -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value">31</div>
+                <div class="stat-label">Swift Files</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">~3.7k</div>
+                <div class="stat-label">Lines of Code</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">14</div>
+                <div class="stat-label">Unit Tests</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">6</div>
+                <div class="stat-label">Themes</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">0</div>
+                <div class="stat-label">Issues Found</div>
+            </div>
+        </div>
+
+        <!-- New Feature -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-title">New Feature: Window Mode</span>
+                <span class="grade excellent">Excellent</span>
+            </div>
+            <div class="section-content">
+                <div class="new-feature">
+                    <div class="new-feature-title">DashboardWindow.swift</div>
+                    <p>Clean implementation of standalone floating window. Follows all conventions.</p>
+                </div>
+
+                <ul class="checklist">
+                    <li>
+                        <span class="check pass">&#10003;</span>
+                        <div class="item-content">
+                            <div class="item-title">@MainActor Isolation</div>
+                            <div class="item-desc">Class properly marked <code>@MainActor public final class DashboardWindow: NSWindow</code></div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="check pass">&#10003;</span>
+                        <div class="item-content">
+                            <div class="item-title">Notification Pattern</div>
+                            <div class="item-desc">Uses <code>.dashboardWindowClosed</code> notification for clean lifecycle management</div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="check pass">&#10003;</span>
+                        <div class="item-content">
+                            <div class="item-title">Theme Support</div>
+                            <div class="item-desc">Observes <code>.themeChanged</code> and updates appearance dynamically</div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="check pass">&#10003;</span>
+                        <div class="item-content">
+                            <div class="item-title">Window Behavior</div>
+                            <div class="item-desc">Floating level with <code>.canJoinAllSpaces</code> - works across all desktops</div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="check pass">&#10003;</span>
+                        <div class="item-content">
+                            <div class="item-title">Size Constraints</div>
+                            <div class="item-desc">Proper min/max sizes (400x600 to 600x900) - resizable but constrained</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Code Quality -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-title">CorvidLabs Conventions Compliance</span>
+                <span class="grade excellent">100%</span>
+            </div>
+            <div class="section-content">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Convention</th>
+                            <th>Status</th>
+                            <th>Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Explicit Access Control</td>
+                            <td><span class="grade excellent">Pass</span></td>
+                            <td>All 434+ declarations have public/private/internal</td>
+                        </tr>
+                        <tr>
+                            <td>K&R Brace Style</td>
+                            <td><span class="grade excellent">Pass</span></td>
+                            <td>100% consistent throughout</td>
+                        </tr>
+                        <tr>
+                            <td>No Force Unwraps</td>
+                            <td><span class="grade excellent">Pass</span></td>
+                            <td>Zero instances of !, try!, as!</td>
+                        </tr>
+                        <tr>
+                            <td>Async/Await Only</td>
+                            <td><span class="grade excellent">Pass</span></td>
+                            <td>No completion handlers, all async/await</td>
+                        </tr>
+                        <tr>
+                            <td>Sendable Conformance</td>
+                            <td><span class="grade excellent">Pass</span></td>
+                            <td>All concurrent types marked Sendable</td>
+                        </tr>
+                        <tr>
+                            <td>@Sendable Closures</td>
+                            <td><span class="grade excellent">Pass</span></td>
+                            <td>Callbacks properly annotated</td>
+                        </tr>
+                        <tr>
+                            <td>@MainActor Usage</td>
+                            <td><span class="grade excellent">Pass</span></td>
+                            <td>UI classes properly isolated</td>
+                        </tr>
+                        <tr>
+                            <td>Descriptive Generics</td>
+                            <td><span class="grade excellent">Pass</span></td>
+                            <td>Uses Value, not T</td>
+                        </tr>
+                        <tr>
+                            <td>Guard Patterns</td>
+                            <td><span class="grade excellent">Pass</span></td>
+                            <td>guard let self else { return } used correctly</td>
+                        </tr>
+                        <tr>
+                            <td>Documentation</td>
+                            <td><span class="grade excellent">Pass</span></td>
+                            <td>All public APIs documented</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Architecture -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-title">Architecture</span>
+                <span class="grade excellent">Excellent</span>
+            </div>
+            <div class="section-content">
+                <div class="code-block">
+<pre>
+                        @MainActor
+                     ┌──────────────┐
+                     │  AppDelegate │
+                     └──────┬───────┘
+                            │
+              ┌─────────────┴─────────────┐
+              ▼                           ▼
+    ┌──────────────────┐      ┌──────────────────┐
+    │ StatusBarController │      │  DashboardWindow  │  <span class="comment">← NEW</span>
+    └────────┬─────────┘      └────────┬─────────┘
+             │                         │
+             └───────────┬─────────────┘
+                         ▼
+              ┌─────────────────────┐
+              │ DashboardViewController │
+              └──────────┬──────────┘
+                         │
+    ┌────────────────────┼────────────────────┐
+    ▼                    ▼                    ▼
+┌────────┐         ┌──────────┐         ┌──────────┐
+│ actor  │         │  actor   │         │  actor   │
+│Metrics │────────▶│  CPU     │         │ Memory   │ ... + 3 more
+│Coord   │         │ Monitor  │         │ Monitor  │
+└────────┘         └──────────┘         └──────────┘
+</pre>
+                </div>
+
+                <ul class="checklist">
+                    <li>
+                        <span class="check pass">&#10003;</span>
+                        <div class="item-content">
+                            <div class="item-title">Actor-based Concurrency</div>
+                            <div class="item-desc">6 actors for thread-safe metric collection. MetricsCoordinator orchestrates parallel collection via <code>async let</code>.</div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="check pass">&#10003;</span>
+                        <div class="item-content">
+                            <div class="item-title">Clean Separation</div>
+                            <div class="item-desc">Models, Services, Core, Views, App - each layer has clear responsibility.</div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="check pass">&#10003;</span>
+                        <div class="item-content">
+                            <div class="item-title">AppState Integration</div>
+                            <div class="item-desc">Theme persistence via StoredState with proper @MainActor isolation.</div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="check pass">&#10003;</span>
+                        <div class="item-content">
+                            <div class="item-title">Window Mode Addition</div>
+                            <div class="item-desc">Cleanly integrated - both popover and window receive updates, proper lifecycle management.</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Swift 6 -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-title">Swift 6 Readiness</span>
+                <span class="grade excellent">Excellent</span>
+            </div>
+            <div class="section-content">
+                <ul class="checklist">
+                    <li>
+                        <span class="check pass">&#10003;</span>
+                        <div class="item-content">
+                            <div class="item-title">Swift Language Mode</div>
+                            <div class="item-desc"><code>.swiftLanguageMode(.v6)</code> enabled in Package.swift</div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="check pass">&#10003;</span>
+                        <div class="item-content">
+                            <div class="item-title">Strict Concurrency</div>
+                            <div class="item-desc">Builds clean with Swift 6.1 strict concurrency checking</div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="check pass">&#10003;</span>
+                        <div class="item-content">
+                            <div class="item-title">No Deprecation Warnings</div>
+                            <div class="item-desc">All String(cString:) usage fixed with withUnsafeBufferPointer</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Tests -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-title">Test Coverage</span>
+                <span class="grade good">Good Start</span>
+            </div>
+            <div class="section-content">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Suite</th>
+                            <th>Tests</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>ByteFormatter</td>
+                            <td>4 tests</td>
+                            <td><span class="grade excellent">Pass</span></td>
+                        </tr>
+                        <tr>
+                            <td>HistoricalData</td>
+                            <td>3 tests</td>
+                            <td><span class="grade excellent">Pass</span></td>
+                        </tr>
+                        <tr>
+                            <td>Themes</td>
+                            <td>3 tests</td>
+                            <td><span class="grade excellent">Pass</span></td>
+                        </tr>
+                        <tr>
+                            <td>CPUMetrics</td>
+                            <td>2 tests</td>
+                            <td><span class="grade excellent">Pass</span></td>
+                        </tr>
+                        <tr>
+                            <td>MemoryMetrics</td>
+                            <td>2 tests</td>
+                            <td><span class="grade excellent">Pass</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p style="margin-top: 1rem; color: var(--text-muted);">
+                    14 tests covering utilities and models. Service layer tests would be nice for v1.1.
+                </p>
+            </div>
+        </div>
+
+        <!-- CI -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-title">CI/CD</span>
+                <span class="grade excellent">Passing</span>
+            </div>
+            <div class="section-content">
+                <ul class="checklist">
+                    <li>
+                        <span class="check pass">&#10003;</span>
+                        <div class="item-content">
+                            <div class="item-title">Build & Test</div>
+                            <div class="item-desc">Compiles clean, all 14 tests pass</div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="check pass">&#10003;</span>
+                        <div class="item-content">
+                            <div class="item-title">Swift Format</div>
+                            <div class="item-desc">Linting configured (optional)</div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="check pass">&#10003;</span>
+                        <div class="item-content">
+                            <div class="item-title">Documentation</div>
+                            <div class="item-desc">DocC generation configured</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="summary-box">
+            <div class="summary-title">Final Verdict</div>
+            <div class="summary-text">
+                This is <span class="highlight">production-ready code</span> that I'm proud to have in the CorvidLabs portfolio.
+                <br><br>
+                <strong>What I love:</strong>
+                <ul style="margin: 0.5rem 0 0 1.5rem;">
+                    <li>Actor-based architecture is textbook Swift concurrency</li>
+                    <li>Zero force unwraps - every optional handled properly</li>
+                    <li>AppState integration is clean and type-safe</li>
+                    <li>Window mode was added without disrupting existing architecture</li>
+                    <li>Retro CRT aesthetic with 6 themes is chef's kiss</li>
+                </ul>
+                <br>
+                <strong>Suggestions for v1.1:</strong>
+                <ul style="margin: 0.5rem 0 0 1.5rem;">
+                    <li>Add service layer tests with mock data injection</li>
+                    <li>Consider adding launch-at-login preference</li>
+                    <li>Maybe keyboard shortcuts for quick metrics view</li>
+                </ul>
+                <br>
+                <span class="highlight">APPROVED - Let's ship it!</span>
+            </div>
+        </div>
+
+        <footer>
+            <div>Code Review completed January 20, 2026</div>
+            <div class="signature">- 0xLeif</div>
+            <div style="margin-top: 0.5rem; font-size: 0.75rem;">
+                PR #1: Add Window Mode for Persistent Dashboard Display
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
