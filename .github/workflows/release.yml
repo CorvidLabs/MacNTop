@@ -106,7 +106,8 @@ jobs:
         timeout-minutes: 15
         run: |
           # Use shell timeout as safety net (14 minutes = 840 seconds)
-          timeout 840 xcrun notarytool submit "${{ env.APP_NAME }}.zip" \
+          # macOS uses gtimeout from coreutils (brew install coreutils)
+          gtimeout 840 xcrun notarytool submit "${{ env.APP_NAME }}.zip" \
             --keychain-profile "${{ env.NOTARIZE_PROFILE }}" \
             --wait \
             --timeout 600 \
