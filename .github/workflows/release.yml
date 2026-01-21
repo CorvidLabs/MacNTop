@@ -25,6 +25,7 @@ jobs:
   build-and-release:
     name: Build, Sign & Notarize
     runs-on: self-hosted
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -101,12 +102,28 @@ jobs:
           ditto -c -k --keepParent "${{ env.APP_NAME }}.app" "${{ env.APP_NAME }}.zip"
 
       - name: Notarize App
+        id: notarize
+        timeout-minutes: 15
         run: |
-          xcrun notarytool submit "${{ env.APP_NAME }}.zip" \
+          # Use shell timeout as safety net (14 minutes = 840 seconds)
+          timeout 840 xcrun notarytool submit "${{ env.APP_NAME }}.zip" \
             --keychain-profile "${{ env.NOTARIZE_PROFILE }}" \
-            --wait
+            --wait \
+            --timeout 600 \
+            --no-progress \
+            2>&1 | tee notarization.log
+
+          # Check if successful
+          if grep -q "status: Accepted" notarization.log; then
+            echo "Notarization successful"
+          else
+            echo "Notarization may have failed, checking status..."
+            cat notarization.log
+            exit 1
+          fi
 
       - name: Staple Notarization Ticket
+        if: steps.notarize.outcome == 'success'
         run: |
           xcrun stapler staple "${{ env.APP_NAME }}.app"
 
