@@ -21,6 +21,9 @@ env:
   SIGNING_IDENTITY: "Developer ID Application: Zach Eriksen (8M8SAX62V2)"
   NOTARIZE_PROFILE: "GitHub-Mac-Notarize"
 
+permissions:
+  contents: write
+
 jobs:
   build-and-release:
     name: Build, Sign & Notarize
