@@ -133,7 +133,8 @@ jobs:
 
       - name: Verify Final App
         run: |
-          spctl --assess --verbose "${{ env.APP_NAME }}.app"
+          # Use --type execute for CLI tools wrapped in .app bundles
+          spctl --assess --type execute --verbose "${{ env.APP_NAME }}.app"
           codesign -dv --verbose=4 "${{ env.APP_NAME }}.app"
 
       - name: Create GitHub Release
