@@ -1,12 +1,44 @@
 import AppState
 import Foundation
 
+// MARK: - Theme Enum
+
+/// Available themes for the application.
+public enum Theme: String, CaseIterable, Sendable, Codable {
+    case retroGreen = "Retro Green"
+    case amber = "Amber CRT"
+    case blueIce = "Blue Ice"
+    case matrix = "Matrix"
+    case dracula = "Dracula"
+    case light = "Light"
+
+    /// The corresponding ThemeColors for this theme.
+    public var colors: ThemeColors {
+        switch self {
+        case .retroGreen: return Themes.retroGreen
+        case .amber: return Themes.amber
+        case .blueIce: return Themes.blueIce
+        case .matrix: return Themes.matrix
+        case .dracula: return Themes.dracula
+        case .light: return Themes.light
+        }
+    }
+
+    /// Creates a Theme from a ThemeColors instance.
+    public init?(from colors: ThemeColors) {
+        guard let theme = Theme.allCases.first(where: { $0.colors.name == colors.name }) else {
+            return nil
+        }
+        self = theme
+    }
+}
+
 // MARK: - Theme State
 
 extension Application {
-    /// The current theme name for the application, persisted in UserDefaults.
-    var themeName: StoredState<String> {
-        storedState(initial: "Retro Green", id: "selectedTheme")
+    /// The current theme for the application, persisted in UserDefaults.
+    var theme: StoredState<Theme> {
+        storedState(initial: .retroGreen, id: "selectedTheme")
     }
 }
 
@@ -21,28 +53,32 @@ extension Notification.Name {
 
 /// Provides convenient access to the current theme colors using AppState.
 public enum AppTheme {
-    /// Gets the current theme colors based on stored theme name.
+    /// Gets the current theme colors based on stored theme.
     @MainActor
     public static var current: ThemeColors {
-        let storedState = Application.storedState(\.themeName)
-        let themeName = storedState.value
-        return Themes.all.first { $0.name == themeName } ?? Themes.retroGreen
+        Application.storedState(\.theme).value.colors
+    }
+
+    /// Gets the current theme enum value.
+    @MainActor
+    public static var currentTheme: Theme {
+        Application.storedState(\.theme).value
     }
 
     /// Sets the current theme.
     /// - Parameter theme: The theme to set.
     @MainActor
-    public static func setTheme(_ theme: ThemeColors) {
-        var storedState = Application.storedState(\.themeName)
-        storedState.value = theme.name
-        NotificationCenter.default.post(name: .themeChanged, object: theme)
+    public static func setTheme(_ theme: Theme) {
+        var storedState = Application.storedState(\.theme)
+        storedState.value = theme
+        NotificationCenter.default.post(name: .themeChanged, object: theme.colors)
     }
 
-    /// Sets the current theme by name string.
-    /// - Parameter name: The name of the theme to set.
+    /// Sets the current theme from ThemeColors.
+    /// - Parameter colors: The theme colors to set.
     @MainActor
-    public static func setTheme(named name: String) {
-        if let theme = Themes.all.first(where: { $0.name == name }) {
+    public static func setTheme(_ colors: ThemeColors) {
+        if let theme = Theme(from: colors) {
             setTheme(theme)
         }
     }
