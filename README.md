@@ -6,10 +6,16 @@ A macOS menu bar system monitor with retro CRT terminal aesthetics.
 [![macOS 14+](https://img.shields.io/badge/macOS-14+-blue.svg)](https://www.apple.com/macos)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-<p align="center">
-  <img src="docs/screenshot-top.png" alt="MacNTop - System Info, CPU, Memory, Network" width="400">
-  <img src="docs/screenshot-bottom.png" alt="MacNTop - Disk and Processes" width="400">
-</p>
+<table align="center">
+  <tr>
+    <td align="center"><img src="docs/screenshot-top.png" alt="MacNTop Menu" width="380"></td>
+    <td align="center"><img src="docs/screenshot-bottom.png" alt="MacNTop Window" width="380"></td>
+  </tr>
+  <tr>
+    <td align="center"><em>Menu Bar Popover</em></td>
+    <td align="center"><em>Floating Window</em></td>
+  </tr>
+</table>
 
 ## Features
 
