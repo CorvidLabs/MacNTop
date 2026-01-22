@@ -7,7 +7,8 @@ A macOS menu bar system monitor with retro CRT terminal aesthetics.
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 <p align="center">
-  <img src="docs/screenshot.png" alt="MacNTop Screenshot" width="480">
+  <img src="docs/screenshot-top.png" alt="MacNTop - System Info, CPU, Memory, Network" width="400">
+  <img src="docs/screenshot-bottom.png" alt="MacNTop - Disk and Processes" width="400">
 </p>
 
 ## Features
