@@ -10,11 +10,15 @@ public actor MetricsCoordinator {
     private let networkMonitor: NetworkMonitor
     private let diskMonitor: DiskMonitor
     private let processMonitor: ProcessMonitor
+    private let gpuMonitor: GPUMonitor
+    private let thermalMonitor: ThermalMonitor
+    private let powerMonitor: PowerMonitor
 
     private var cpuHistory: HistoricalData<Double>
     private var memoryHistory: HistoricalData<Double>
     private var downloadHistory: HistoricalData<Double>
     private var uploadHistory: HistoricalData<Double>
+    private var gpuHistory: HistoricalData<Double>
 
     private var cachedSystemInfo: SystemInfo?
 
@@ -33,11 +37,15 @@ public actor MetricsCoordinator {
         self.networkMonitor = NetworkMonitor()
         self.diskMonitor = DiskMonitor()
         self.processMonitor = ProcessMonitor()
+        self.gpuMonitor = GPUMonitor()
+        self.thermalMonitor = ThermalMonitor()
+        self.powerMonitor = PowerMonitor()
 
         self.cpuHistory = HistoricalData(capacity: historyCapacity)
         self.memoryHistory = HistoricalData(capacity: historyCapacity)
         self.downloadHistory = HistoricalData(capacity: historyCapacity)
         self.uploadHistory = HistoricalData(capacity: historyCapacity)
+        self.gpuHistory = HistoricalData(capacity: historyCapacity)
     }
 
     // MARK: - Public Methods
@@ -98,6 +106,11 @@ public actor MetricsCoordinator {
         uploadHistory.values
     }
 
+    /// Returns the current GPU usage history.
+    public func getGPUHistory() -> [Double] {
+        gpuHistory.values
+    }
+
     // MARK: - Private Methods
 
     private func collectAndNotify() async {
@@ -111,15 +124,19 @@ public actor MetricsCoordinator {
         async let network = networkMonitor.collectMetrics()
         async let disk = diskMonitor.collectMetrics()
         async let processes = processMonitor.collectMetrics()
+        async let gpu = gpuMonitor.collectMetrics()
+        async let thermal = thermalMonitor.collectMetrics()
+        async let power = powerMonitor.collectMetrics()
 
-        let (cpuMetrics, memoryMetrics, networkMetrics, diskMetrics, processMetrics) = await (
-            cpu, memory, network, disk, processes
+        let (cpuMetrics, memoryMetrics, networkMetrics, diskMetrics, processMetrics, gpuMetrics, thermalMetrics, powerMetrics) = await (
+            cpu, memory, network, disk, processes, gpu, thermal, power
         )
 
         cpuHistory.add(cpuMetrics.averageUsage)
         memoryHistory.add(memoryMetrics.pressure)
         downloadHistory.add(networkMetrics.downloadSpeed)
         uploadHistory.add(networkMetrics.uploadSpeed)
+        gpuHistory.add(gpuMetrics.utilization)
 
         return MetricsSnapshot(
             cpu: cpuMetrics,
@@ -127,10 +144,14 @@ public actor MetricsCoordinator {
             network: networkMetrics,
             disk: diskMetrics,
             processes: processMetrics,
+            gpu: gpuMetrics,
+            thermal: thermalMetrics,
+            power: powerMetrics,
             cpuHistory: cpuHistory.values,
             memoryHistory: memoryHistory.values,
             downloadHistory: downloadHistory.values,
             uploadHistory: uploadHistory.values,
+            gpuHistory: gpuHistory.values,
             timestamp: Date()
         )
     }
@@ -143,9 +164,13 @@ public struct MetricsSnapshot: Sendable {
     public let network: NetworkMetrics
     public let disk: DiskMetrics
     public let processes: ProcessMetrics
+    public let gpu: GPUMetrics
+    public let thermal: ThermalMetrics
+    public let power: PowerMetrics
     public let cpuHistory: [Double]
     public let memoryHistory: [Double]
     public let downloadHistory: [Double]
     public let uploadHistory: [Double]
+    public let gpuHistory: [Double]
     public let timestamp: Date
 }

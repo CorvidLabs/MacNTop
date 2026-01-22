@@ -29,6 +29,12 @@ public final class DashboardViewController: NSViewController {
 
         dashboard.staticInfoView.configure(with: systemInfo)
         dashboard.cpuView.configure(with: snapshot.cpu, history: snapshot.cpuHistory)
+        dashboard.systemStatusView.configure(
+            gpu: snapshot.gpu,
+            thermal: snapshot.thermal,
+            power: snapshot.power,
+            gpuHistory: snapshot.gpuHistory
+        )
         dashboard.memoryView.configure(with: snapshot.memory, history: snapshot.memoryHistory)
         dashboard.networkView.configure(
             with: snapshot.network,

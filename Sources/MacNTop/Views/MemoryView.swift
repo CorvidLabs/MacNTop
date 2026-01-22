@@ -42,6 +42,22 @@ public final class MemoryView: NSView {
         return view
     }()
 
+    private let swapLabel: NSTextField = {
+        let label = NSTextField(labelWithString: "")
+        label.font = RetroTheme.smallMono
+        label.textColor = RetroTheme.warning
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+
+    private let swapBar: SwapBar = {
+        let bar = SwapBar()
+        bar.translatesAutoresizingMaskIntoConstraints = false
+        return bar
+    }()
+
+    private var swapHeightConstraint: NSLayoutConstraint?
+
     // MARK: - Initialization
 
     public override init(frame frameRect: NSRect) {
@@ -65,6 +81,11 @@ public final class MemoryView: NSView {
         addSubview(segmentedBar)
         addSubview(legendStack)
         addSubview(sparkline)
+        addSubview(swapLabel)
+        addSubview(swapBar)
+
+        let swapHeight = swapBar.heightAnchor.constraint(equalToConstant: 0)
+        swapHeightConstraint = swapHeight
 
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 16),
@@ -87,7 +108,15 @@ public final class MemoryView: NSView {
             sparkline.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             sparkline.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
             sparkline.heightAnchor.constraint(equalToConstant: 40),
-            sparkline.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16)
+
+            swapLabel.topAnchor.constraint(equalTo: sparkline.bottomAnchor, constant: 8),
+            swapLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+
+            swapBar.topAnchor.constraint(equalTo: swapLabel.bottomAnchor, constant: 4),
+            swapBar.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            swapBar.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+            swapHeight,
+            swapBar.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16)
         ])
 
         setupLegend()
@@ -138,6 +167,19 @@ public final class MemoryView: NSView {
         )
 
         sparkline.setValues(history, color: color)
+
+        // Update swap display
+        if metrics.swap.isActive {
+            swapLabel.stringValue = "Swap: \(metrics.swap.formattedUsed) / \(metrics.swap.formattedTotal)"
+            swapLabel.isHidden = false
+            swapBar.isHidden = false
+            swapBar.update(usagePercent: metrics.swap.usagePercent)
+            swapHeightConstraint?.constant = 8
+        } else {
+            swapLabel.isHidden = true
+            swapBar.isHidden = true
+            swapHeightConstraint?.constant = 0
+        }
     }
 }
 
@@ -184,6 +226,48 @@ private final class SegmentedMemoryBar: NSView {
         }
 
         // Draw pixel border
+        RetroTheme.separator.setStroke()
+        let borderPath = NSBezierPath(rect: bounds.insetBy(dx: 0.5, dy: 0.5))
+        borderPath.lineWidth = 1
+        borderPath.stroke()
+    }
+}
+
+// MARK: - SwapBar
+
+private final class SwapBar: NSView {
+    private var usagePercent: Double = 0
+
+    override init(frame frameRect: NSRect) {
+        super.init(frame: frameRect)
+        wantsLayer = true
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+
+    func update(usagePercent: Double) {
+        self.usagePercent = usagePercent
+        needsDisplay = true
+    }
+
+    override func draw(_ dirtyRect: NSRect) {
+        super.draw(dirtyRect)
+
+        RetroTheme.barBackground.setFill()
+        NSBezierPath(rect: bounds).fill()
+
+        // Draw usage portion in warning/critical color
+        let usedWidth = bounds.width * CGFloat(usagePercent / 100.0)
+        if usedWidth > 0 {
+            let color: NSColor = usagePercent > 80 ? .systemRed : .systemOrange
+            color.setFill()
+            let usedRect = NSRect(x: 0, y: 0, width: usedWidth, height: bounds.height)
+            NSBezierPath(rect: usedRect).fill()
+        }
+
+        // Draw border
         RetroTheme.separator.setStroke()
         let borderPath = NSBezierPath(rect: bounds.insetBy(dx: 0.5, dy: 0.5))
         borderPath.lineWidth = 1

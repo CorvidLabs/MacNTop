@@ -32,6 +32,8 @@ public actor MemoryMonitor {
             }
         }
 
+        let swap = collectSwapMetrics()
+
         guard result == KERN_SUCCESS else {
             return MemoryMetrics(
                 total: totalMemory,
@@ -41,6 +43,7 @@ public actor MemoryMonitor {
                 inactive: 0,
                 free: totalMemory,
                 appMemory: 0,
+                swap: swap,
                 timestamp: Date()
             )
         }
@@ -65,7 +68,28 @@ public actor MemoryMonitor {
             inactive: inactive,
             free: free,
             appMemory: appMemory,
+            swap: swap,
             timestamp: Date()
+        )
+    }
+
+    // MARK: - Private Methods
+
+    /// Collects swap usage via sysctl.
+    private func collectSwapMetrics() -> SwapMetrics {
+        var swapUsage = xsw_usage()
+        var size = MemoryLayout<xsw_usage>.size
+
+        let result = sysctlbyname("vm.swapusage", &swapUsage, &size, nil, 0)
+
+        guard result == 0 else {
+            return .zero
+        }
+
+        return SwapMetrics(
+            total: swapUsage.xsu_total,
+            used: swapUsage.xsu_used,
+            free: swapUsage.xsu_avail
         )
     }
 }

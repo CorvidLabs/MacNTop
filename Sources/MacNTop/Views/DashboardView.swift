@@ -40,6 +40,7 @@ public final class DashboardView: NSView {
 
     public let staticInfoView = StaticInfoView()
     public let cpuView = CPUView()
+    public let systemStatusView = SystemStatusView()
     public let memoryView = MemoryView()
     public let networkView = NetworkView()
     public let diskView = DiskView()
@@ -121,6 +122,8 @@ public final class DashboardView: NSView {
             staticInfoView,
             createSeparator(),
             cpuView,
+            createSeparator(),
+            systemStatusView,
             createSeparator(),
             memoryView,
             createSeparator(),

@@ -132,6 +132,7 @@ struct MemoryMetricsTests {
             inactive: 1_000_000_000,
             free: 8_000_000_000,
             appMemory: 4_000_000_000,
+            swap: .zero,
             timestamp: Date()
         )
 
@@ -149,6 +150,7 @@ struct MemoryMetricsTests {
             inactive: 10,
             free: 30,
             appMemory: 30,
+            swap: .zero,
             timestamp: Date()
         )
 
