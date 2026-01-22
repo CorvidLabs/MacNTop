@@ -31,6 +31,30 @@ public enum Theme: String, CaseIterable, Sendable, Codable {
         }
         self = theme
     }
+
+    // MARK: - Current Theme Access
+
+    /// Gets the current theme from stored state.
+    @MainActor
+    public static var current: Theme {
+        Application.storedState(\.theme).value
+    }
+
+    /// Sets the current theme.
+    @MainActor
+    public static func setCurrent(_ theme: Theme) {
+        var storedState = Application.storedState(\.theme)
+        storedState.value = theme
+        NotificationCenter.default.post(name: .themeChanged, object: theme.colors)
+    }
+
+    /// Sets the current theme from ThemeColors.
+    @MainActor
+    public static func setCurrent(_ colors: ThemeColors) {
+        if let theme = Theme(from: colors) {
+            setCurrent(theme)
+        }
+    }
 }
 
 // MARK: - Theme State
@@ -47,39 +71,4 @@ extension Application {
 extension Notification.Name {
     /// Posted when the theme changes.
     static let themeChanged = Notification.Name("ThemeChanged")
-}
-
-// MARK: - Theme Accessor
-
-/// Provides convenient access to the current theme colors using AppState.
-public enum AppTheme {
-    /// Gets the current theme colors based on stored theme.
-    @MainActor
-    public static var current: ThemeColors {
-        Application.storedState(\.theme).value.colors
-    }
-
-    /// Gets the current theme enum value.
-    @MainActor
-    public static var currentTheme: Theme {
-        Application.storedState(\.theme).value
-    }
-
-    /// Sets the current theme.
-    /// - Parameter theme: The theme to set.
-    @MainActor
-    public static func setTheme(_ theme: Theme) {
-        var storedState = Application.storedState(\.theme)
-        storedState.value = theme
-        NotificationCenter.default.post(name: .themeChanged, object: theme.colors)
-    }
-
-    /// Sets the current theme from ThemeColors.
-    /// - Parameter colors: The theme colors to set.
-    @MainActor
-    public static func setTheme(_ colors: ThemeColors) {
-        if let theme = Theme(from: colors) {
-            setTheme(theme)
-        }
-    }
 }

@@ -107,14 +107,14 @@ public enum Themes {
 public enum RetroTheme {
     // MARK: - Colors (Dynamic via AppState)
 
-    @MainActor public static var background: NSColor { AppTheme.current.background }
-    @MainActor public static var primaryText: NSColor { AppTheme.current.primaryText }
-    @MainActor public static var secondaryText: NSColor { AppTheme.current.secondaryText }
-    @MainActor public static var accent: NSColor { AppTheme.current.accent }
-    @MainActor public static var warning: NSColor { AppTheme.current.warning }
-    @MainActor public static var critical: NSColor { AppTheme.current.critical }
-    @MainActor public static var barBackground: NSColor { AppTheme.current.barBackground }
-    @MainActor public static var separator: NSColor { AppTheme.current.separator }
+    @MainActor public static var background: NSColor { Theme.current.colors.background }
+    @MainActor public static var primaryText: NSColor { Theme.current.colors.primaryText }
+    @MainActor public static var secondaryText: NSColor { Theme.current.colors.secondaryText }
+    @MainActor public static var accent: NSColor { Theme.current.colors.accent }
+    @MainActor public static var warning: NSColor { Theme.current.colors.warning }
+    @MainActor public static var critical: NSColor { Theme.current.colors.critical }
+    @MainActor public static var barBackground: NSColor { Theme.current.colors.barBackground }
+    @MainActor public static var separator: NSColor { Theme.current.colors.separator }
 
     // MARK: - Glow Colors
 

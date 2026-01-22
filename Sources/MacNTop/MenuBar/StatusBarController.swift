@@ -187,12 +187,12 @@ public final class StatusBarController {
 
         // Theme submenu
         let themeMenu = NSMenu()
-        let currentTheme = AppTheme.current
-        for theme in Themes.all {
-            let item = NSMenuItem(title: theme.name, action: #selector(selectTheme(_:)), keyEquivalent: "")
+        let currentTheme = Theme.current
+        for theme in Theme.allCases {
+            let item = NSMenuItem(title: theme.rawValue, action: #selector(selectTheme(_:)), keyEquivalent: "")
             item.target = self
             item.representedObject = theme
-            if theme.name == currentTheme.name {
+            if theme == currentTheme {
                 item.state = .on
             }
             themeMenu.addItem(item)
@@ -217,8 +217,8 @@ public final class StatusBarController {
 
     @objc
     private func selectTheme(_ sender: NSMenuItem) {
-        guard let theme = sender.representedObject as? ThemeColors else { return }
-        AppTheme.setTheme(theme)
+        guard let theme = sender.representedObject as? Theme else { return }
+        Theme.setCurrent(theme)
     }
 
     @objc
