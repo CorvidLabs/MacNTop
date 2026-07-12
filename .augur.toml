@@ -1,0 +1,3 @@
+[thresholds]
+review = 35
+block = 65

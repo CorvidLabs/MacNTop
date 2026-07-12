@@ -1,0 +1,4 @@
+{
+  "requireAttestation": true,
+  "requireTestsPassed": true
+}
