@@ -5,4 +5,4 @@ artifact: docs
 
 # Docs
 
-The governance spec records local metrics, concurrency, history, UI, error, and privacy invariants. Public documentation remains unchanged.
+The active canonical spec and companions record the existing local metrics, concurrency, bounded history, formatting, menu/window, UI, error, and privacy invariants. Public README content and application behavior remain unchanged.

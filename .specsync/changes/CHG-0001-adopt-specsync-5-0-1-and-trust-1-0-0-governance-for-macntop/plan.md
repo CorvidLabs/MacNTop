@@ -5,4 +5,8 @@ artifact: plan
 
 # Plan
 
-1. Record existing behavior and privacy boundaries. 2. Install all agents and Trust policy. 3. Add native macOS verification. 4. Validate locally and hosted. 5. Leave approvals to an authorized reviewer.
+1. Inventory all 38 Swift product files, exported types, and existing test coverage.
+2. Record the monitor, model, coordinator, formatting, menu, window, view, concurrency, and privacy contracts with stable IDs.
+3. Install all four agents and configure Trust for measured 100% coverage.
+4. Run strict SpecSync validation, Swift build, the complete native test suite, and local Trust.
+5. Record portable definition and closing approvals at their supported lifecycle gates, then require exact-head hosted checks before merge.

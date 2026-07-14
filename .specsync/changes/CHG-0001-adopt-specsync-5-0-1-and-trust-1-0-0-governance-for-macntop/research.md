@@ -5,4 +5,4 @@ artifact: research
 
 # Research
 
-Existing CI builds and tests without launching the application. Metrics and preferences remain local. No prior SpecSync threshold or release workflow exists.
+Existing CI builds and tests without launching the application. The 38 Swift files cover application lifecycle, nine monitor services, metric models, bounded history, formatting, menu/window state, and AppKit presentation. Metrics and preferences remain local, unavailable sensors use optional or safe fallback paths, and no release workflow is part of this migration.

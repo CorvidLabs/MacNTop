@@ -5,4 +5,4 @@ artifact: design
 
 # Design
 
-Preserve CI and app behavior. Add a separate macOS Trust job with trusted-base fetch, exact event range, advisory coverage zero, blocking risk, progressive provenance, and Atlas disabled.
+Map every authored Swift file to one active canonical contract, group the existing behavior into twelve independently evidenced requirements, and enforce measured 100% file, LOC, and export coverage. Preserve the macOS runner and native build/test boundary. Add a separate Trust job with trusted-base fetch, blocking risk, progressive provenance, and Atlas disabled.

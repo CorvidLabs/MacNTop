@@ -5,6 +5,8 @@ artifact: tasks
 
 # Tasks
 
-- [x] Preserve app APIs, privacy, platform, dependency, and CI behavior.
-- [x] Add requirements, agents, and Trust configuration.
-- [ ] Obtain authorized definition and closing approvals.
+- [x] Inventory all authored Swift files and exported application, monitor, model, utility, and presentation types.
+- [x] Preserve app APIs, privacy, platform, dependency, runner, and CI behavior.
+- [x] Map all 38 Swift files and twelve concrete existing-behavior requirements to the active canonical contract.
+- [x] Install all four agent integrations and configure Trust for measured 100% coverage.
+- [x] Keep the interactive application launch, telemetry, deployment, and release publication outside the migration lane.

@@ -33,7 +33,7 @@
     "specs/"
   ],
   "verification_commands": [
-    "swift build && swift test"
+    "fledge lanes run verify"
   ],
   "custom_artifacts": {},
   "principles_file": null
