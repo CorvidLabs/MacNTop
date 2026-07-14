@@ -1,0 +1,5 @@
+[registry]
+name = "MacNTop-trust-wave11"
+
+[specs]
+macntop = "specs/macntop/macntop.spec.md"

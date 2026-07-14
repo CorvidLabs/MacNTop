@@ -1,0 +1,7 @@
+[tasks]
+build = "swift build"
+test = "swift test"
+
+[lanes.verify]
+description = "Build and test MacNTop without launching the interactive app"
+steps = ["build", "test"]

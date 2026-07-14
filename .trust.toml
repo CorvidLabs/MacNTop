@@ -1,0 +1,17 @@
+schema_version = 1
+profile = "standard"
+[lifecycle]
+command = ["fledge", "lanes", "run", "verify"]
+[contract]
+enabled = true
+require_coverage = 100
+skip_reason = ""
+[risk]
+threshold = "block"
+[provenance]
+mode = "soft"
+policy = ".attest.json"
+skip_reason = ""
+[atlas]
+enabled = false
+skip_reason = "No Trust-managed Atlas publication is configured"

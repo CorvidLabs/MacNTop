@@ -1,0 +1,15 @@
+{
+  "bootstrap_policy": {
+    "base_commit": "2a88069b785b67c4d11136ca07337315a589617f",
+    "digest": "17da9387d2f3e8e96682c32e539ea1f1797adbdbd784e02c47b0c608ada2b8a1",
+    "path": ".specsync/sdd.json"
+  },
+  "generated_at": 1783887322,
+  "requirements_needing_ids": [
+    {
+      "action": "review and assign one stable ID per durable requirement",
+      "path": "specs/macntop/requirements.md",
+      "suggested_first_id": "REQ-macntop-001"
+    }
+  ]
+}

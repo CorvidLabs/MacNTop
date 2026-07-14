@@ -1,0 +1,29 @@
+{
+  "timestamp": 1784020578,
+  "commit": "b2f82b0d34fbe4fd1cf83933f030ac5bc0c29e68",
+  "contract_digest": "adcc3df218cc0519b011d5fb46b68178fd3486401878d1355f3a094fd34ae5a6",
+  "workspace_digest": "ec7fd157d36e71063978f1b3a50f4bfb22fa834ea0284cf8fd22a1bdb7bf56fe",
+  "acceptance_input_digest": "9493245979f30ca2e99c92813a7376279a2b470c193c90065a06278d55080ede",
+  "passed": true,
+  "commands": [
+    {
+      "command": "fledge lanes run verify",
+      "success": true,
+      "exit_code": 0
+    }
+  ],
+  "requirement_ids": [
+    "REQ-macntop-001",
+    "REQ-macntop-002",
+    "REQ-macntop-003",
+    "REQ-macntop-004",
+    "REQ-macntop-005",
+    "REQ-macntop-006",
+    "REQ-macntop-007",
+    "REQ-macntop-008",
+    "REQ-macntop-009",
+    "REQ-macntop-010",
+    "REQ-macntop-011",
+    "REQ-macntop-012"
+  ]
+}

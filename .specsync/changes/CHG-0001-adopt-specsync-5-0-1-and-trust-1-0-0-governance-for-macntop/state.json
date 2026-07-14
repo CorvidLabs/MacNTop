@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "id": "CHG-0001-adopt-specsync-5-0-1-and-trust-1-0-0-governance-for-macntop",
+  "slug": "adopt-specsync-5-0-1-and-trust-1-0-0-governance-for-macntop",
+  "title": "Adopt SpecSync 5.0.1 and Trust 1.0.0 governance for MacNTop",
+  "description": "Adopt SpecSync 5.0.1 and Trust 1.0.0 governance for MacNTop",
+  "kind": "migration",
+  "state": "accepted",
+  "canonical_applied": true,
+  "base_commit": "2a88069b785b67c4d11136ca07337315a589617f",
+  "created_at": 1783887404,
+  "updated_at": 1784020585,
+  "affected_specs": [
+    "macntop"
+  ],
+  "affected_paths": [
+    "Sources/",
+    "Tests/",
+    "Package.swift",
+    "fledge.toml",
+    ".github/",
+    ".github/workflows/trust.yml",
+    ".specsync/config.toml",
+    ".specsync/sdd.json",
+    ".specsync/version",
+    "specs/",
+    "specs/macntop/context.md",
+    "specs/macntop/macntop.spec.md",
+    "specs/macntop/requirements.md",
+    "specs/macntop/tasks.md",
+    "specs/macntop/testing.md",
+    ".trust.toml",
+    ".augur.toml",
+    ".attest.json",
+    "AGENTS.md"
+  ],
+  "no_spec_change": false,
+  "no_spec_change_rationale": null,
+  "acceptance_criteria": [
+    "Released SpecSync reports 38 of 38 authored Swift files and complete LOC and export coverage; all twelve existing-behavior requirements receive native evidence; all four agents, Trust doctor, Swift build, the complete test suite, and exact-head hosted checks pass without product-source changes or an interactive launch."
+  ],
+  "selected_artifacts": [
+    "context",
+    "research",
+    "design",
+    "plan",
+    "tasks",
+    "testing",
+    "docs"
+  ],
+  "dependencies": [],
+  "answers": {
+    "architecture_risk": "yes",
+    "public_contract": "no"
+  }
+}
