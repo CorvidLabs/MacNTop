@@ -41,6 +41,13 @@
       "timestamp": 1784020585,
       "digest": "dfe61cff9f1903e1a7598be346024cda7f3de0a1f618bfef89333cbe08aee83f",
       "note": "Fresh closing approval after the three-column Change Log correction and complete 38-file, 277-export, twelve-requirement, 119-test verification passed."
+    },
+    {
+      "gate": "acceptance",
+      "actor": "user:0xLeif",
+      "timestamp": 1784412379,
+      "digest": "a670bcc3249626e081265507c25bea6d1600ed2faaf4d5343174b5a939eeca6c",
+      "note": "Re-acceptance with the Trust consumer pin at the released v1.1.1 immutable commit; canonical deltas were already integrated and were not replayed."
     }
   ],
   "reopenings": [
@@ -90,6 +97,53 @@
       },
       "stale_acceptance_input_digest": "51e73506b60e6337607b368c982becbe72fd3a62095cde4c45a49c16465aa596",
       "current_acceptance_input_digest": "9493245979f30ca2e99c92813a7376279a2b470c193c90065a06278d55080ede"
+    },
+    {
+      "schema_version": 1,
+      "change_id": "CHG-0001-adopt-specsync-5-0-1-and-trust-1-0-0-governance-for-macntop",
+      "actor": "user:0xLeif",
+      "reason": "Trust consumer pin moves to the released v1.1.1 immutable commit; the Trust workflow is a governed delivery input of this change, so accepted verification is stale.",
+      "timestamp": 1784412109,
+      "from_state": "accepted",
+      "to_state": "verifying",
+      "superseded_approval": {
+        "gate": "acceptance",
+        "actor": "user:0xLeif",
+        "timestamp": 1784020585,
+        "digest": "dfe61cff9f1903e1a7598be346024cda7f3de0a1f618bfef89333cbe08aee83f",
+        "note": "Fresh closing approval after the three-column Change Log correction and complete 38-file, 277-export, twelve-requirement, 119-test verification passed."
+      },
+      "prior_verification": {
+        "timestamp": 1784020578,
+        "commit": "b2f82b0d34fbe4fd1cf83933f030ac5bc0c29e68",
+        "contract_digest": "adcc3df218cc0519b011d5fb46b68178fd3486401878d1355f3a094fd34ae5a6",
+        "workspace_digest": "ec7fd157d36e71063978f1b3a50f4bfb22fa834ea0284cf8fd22a1bdb7bf56fe",
+        "acceptance_input_digest": "9493245979f30ca2e99c92813a7376279a2b470c193c90065a06278d55080ede",
+        "passed": true,
+        "commands": [
+          {
+            "command": "fledge lanes run verify",
+            "success": true,
+            "exit_code": 0
+          }
+        ],
+        "requirement_ids": [
+          "REQ-macntop-001",
+          "REQ-macntop-002",
+          "REQ-macntop-003",
+          "REQ-macntop-004",
+          "REQ-macntop-005",
+          "REQ-macntop-006",
+          "REQ-macntop-007",
+          "REQ-macntop-008",
+          "REQ-macntop-009",
+          "REQ-macntop-010",
+          "REQ-macntop-011",
+          "REQ-macntop-012"
+        ]
+      },
+      "stale_acceptance_input_digest": "9493245979f30ca2e99c92813a7376279a2b470c193c90065a06278d55080ede",
+      "current_acceptance_input_digest": "5e90c23329eb19ad0f4c83a47496b4e2ff145fbbaf9e5c6ce4dce6d68c1af1d7"
     }
   ]
 }

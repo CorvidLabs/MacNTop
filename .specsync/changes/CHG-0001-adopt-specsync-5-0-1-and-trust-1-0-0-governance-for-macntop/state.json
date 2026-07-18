@@ -9,7 +9,7 @@
   "canonical_applied": true,
   "base_commit": "2a88069b785b67c4d11136ca07337315a589617f",
   "created_at": 1783887404,
-  "updated_at": 1784020585,
+  "updated_at": 1784412379,
   "affected_specs": [
     "macntop"
   ],
