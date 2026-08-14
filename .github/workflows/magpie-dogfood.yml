@@ -1,0 +1,16 @@
+name: magpie dogfood
+
+# Manual trigger only for this first pass — not wired to push/pull_request
+# yet, so it can't become a blocking check before it's actually proven
+# reliable against a real build of this app. Promote it once it's green a
+# few times in a row.
+on:
+  workflow_dispatch:
+
+jobs:
+  dogfood:
+    uses: CorvidLabs/magpie/.github/workflows/test.yml@main
+    with:
+      specs-dir: .magpie/specs
+      linux-targets: none
+      macos-targets: macos

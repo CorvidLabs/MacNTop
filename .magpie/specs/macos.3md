@@ -1,0 +1,43 @@
+---
+3md: 1.0
+axis: skill
+agent: macntop-tester
+tools: sh, screencapture
+persona: builds MacNTop from source, launches it as a background process, and captures a real screenshot
+---
+Dogfoods CorvidLabs/magpie's macOS target against MacNTop itself. MacNTop
+is a menu-bar app (an SPM executable, not a windowed .app bundle), so this
+checks "does it build and launch without crashing" plus a screenshot,
+rather than the Accessibility-tree read magpie's own specs/macos.3md does
+for a normal-window app like Calculator.
+
+Every `tool=` below is a bare command (no `{placeholder}`) on purpose —
+magpie's generic --specs-dir engine only executes bare commands, since a
+shared engine can't guess fill values for someone else's project. See
+CorvidLabs/magpie's README, "Using this in another repo."
+
+@plane z=0 label="macntop-tester" kind=identity
+# macntop-tester
+
+Build, launch in the background, screenshot, then always tear down —
+regardless of what happened before — so no stray process survives a run.
+
+@plane z=1 label="launch" kind=skill triggers="build, launch, start" tool="sh .magpie/scripts/launch.sh" cost="build"
+# Skill: launch
+
+Builds this PR's MacNTop and launches it detached. Asserts the process is
+still alive a couple of seconds later — a fast crash-on-launch would
+already have exited by then.
+
+@plane z=2 label="screenshot" kind=skill triggers="screenshot, snapshot, capture" tool="screencapture -x artifacts/macos/screenshot.png" cost="fs"
+# Skill: screenshot
+
+Full-screen capture. MacNTop lives in the menu bar, so this is evidence it
+rendered, not a full UI read. Requires [[z=1|launch]].
+
+@plane z=3 label="teardown" kind=skill triggers="teardown, stop, cleanup, kill" tool="sh .magpie/scripts/teardown.sh"
+# Skill: teardown
+
+Kills the backgrounded process by its PID file. Always runs last (z-order),
+regardless of what launch/screenshot reported, so a failed run still
+cleans up. See [[z=1|launch]].
