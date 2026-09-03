@@ -1,9 +1,614 @@
 {
-  "timestamp": 1784020578,
-  "commit": "b2f82b0d34fbe4fd1cf83933f030ac5bc0c29e68",
+  "timestamp": 1784412298,
+  "commit": "5de568a9d5fffea7b295b5a5598fe3fb07bb5d15",
   "contract_digest": "adcc3df218cc0519b011d5fb46b68178fd3486401878d1355f3a094fd34ae5a6",
-  "workspace_digest": "ec7fd157d36e71063978f1b3a50f4bfb22fa834ea0284cf8fd22a1bdb7bf56fe",
-  "acceptance_input_digest": "9493245979f30ca2e99c92813a7376279a2b470c193c90065a06278d55080ede",
+  "workspace_digest": "39e452588d223ee459007302a6119a56ec33b6a66066cf775ae314ca60347fe8",
+  "acceptance_input_digest": "9137b8d0f80ef3b02e5310f2fceb989cc148ed4bc64d777d791c0bc8c65f6d7f",
+  "acceptance_manifest": {
+    "schema_version": 1,
+    "entries": [
+      {
+        "path": ".attest.json",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "2581fe52873327db0bbac357a5102a0dbb18a1eea5a690b7b75eaa571e50cf65",
+        "entry_digest": "2904a18e18582f191a1d359d16e7bc61a7596ac77f62e55a94de56b3da8c796e",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": ".augur.toml",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "17f6ad5b84b4db012f0e3f398a96a478c1324fd47e72e1dd2a13c7cf9a432983",
+        "entry_digest": "bac13c952da05292bdd0af5849aad9d9def3ae5afc830fa42b6914b2fd874beb",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": ".github/workflows/ci.yml",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "2a2a978eef274f28b7da58acccd338e5b6c3b0093c1dfa7e38acad38bd6b79d4",
+        "entry_digest": "6bc0f54fb54061e9a5ebf705da7e20136325a04be65dec3614d497f0ca890ce8",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": ".github/workflows/trust.yml",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "5da8596171e801f6bed0a8a42620b4c7534d6e0acf2c93199d34d81557bb7d06",
+        "entry_digest": "0cb1ce5e711c14a27e8bd3c4714af17fc2cf1f4e83dd9a82b7a7cb932cfbb5a7",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": ".specsync/config.toml",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "004b646b1d825964896c2048daf3d41a77a51898c7acf9b66bdf36f18e26480b",
+        "entry_digest": "05b2226a98fb328f27d20f4b58b3c34f9cd2eefb6dc5517602fa961460842703",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": ".specsync/sdd.json",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "6b6f605e6621f4dbac28d6017a83f719973b2267e2780b24193e32d60adfb5bb",
+        "entry_digest": "8688e3185657b2e8ba194e484699a62504e5dd13ac72d2114375504131243a3d",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": ".specsync/version",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "23b6867924dfeb9cf532753438dc919669bf93ad88215e11c15630a4acbf4299",
+        "entry_digest": "339b5f88be30302336707baa5dab61fd4b324d04e495d3bb772cf893fb4f73bc",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": ".trust.toml",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "e323203a6de605f15463187a679dd92f9106b0bf0f398b702ef418983a355d9a",
+        "entry_digest": "5f7bea763ad855b23a69cc5ad08369cb6a5e5a1aa57ba511de37ac324549811e",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "AGENTS.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "d2561f21b1519604865b1ae0c4a6586f5f2bea591c9b3b7d8c4ae0f274b73df5",
+        "entry_digest": "616b86acb3d91a5f9880826f4063978e95d46397de849b7566f3688823302e01",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "Package.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "f07feb15390d9e0e1b8235e18dcf8f7f8f242045393b1e15904f53d8699f1b0c",
+        "entry_digest": "6c60141e90f5caa6c85d6f2ae55c1974bc2abc2a584aff590e8a07e0c2d299d3",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "Sources/MacNTop/App/AppDelegate.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "de2a7dc643ccb62e2d0dc7b346f7ccab098bc3d6121cec0d34183c30388b72d4",
+        "entry_digest": "d11e8c8451da8ee3cf82c3e76634b017f2cfce4d7626e9341e93e3f38d3c3951",
+        "owners": [
+          "macntop"
+        ]
+      },
+      {
+        "path": "Sources/MacNTop/App/Application+State.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "50ebb9bf8943d2a078b5bb971d52cf9d82165e9538be9bb497424452d01e5c24",
+        "entry_digest": "73207d89b9737fe22b85250b792d86da0c3160ed45d60a496f11d34fe93d07c3",
+        "owners": [
+          "macntop"
+        ]
+      },
+      {
+        "path": "Sources/MacNTop/Core/MetricsCoordinator.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "d521412610e1a401592acc894b604f5d95d4a9e2640467d96d4a63711b6423e7",
+        "entry_digest": "1643225f520e2b30b1e587ecf7bebd18824b2ab0ba661ebc18ed6c90df09deb3",
+        "owners": [
+          "macntop"
+        ]
+      },
+      {
+        "path": "Sources/MacNTop/Documentation.docc/Documentation.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "2178813876fb16e56203d11d539a4bd1bfeb5f9b0d4423a8c27480d08bf95260",
+        "entry_digest": "3a17fc6b3932051baf502a8c0bf51bc63df5a5054b3e4a1c3c261ae8c3bc3c02",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "Sources/MacNTop/Documentation.docc/GettingStarted.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "4a1487db97187b3df40177e514fdad958e0ccc2bbb05bff495098761b506d4a2",
+        "entry_digest": "15bae2dd76e05949e7ee29d07e1c714281156dcc4d64df29aadfd897c1238de6",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "Sources/MacNTop/MenuBar/StatusBarController.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "0a8ee246308eb95788c4d2d384ba35b90efff1c8c3b6193e9890dd6a83fee39a",
+        "entry_digest": "e46b2fd3e9eb5a3da33d40a72e4ed4d54eb34022a2ccf30e66770a4cfef2a097",
+        "owners": [
+          "macntop"
+        ]
+      },
+      {
+        "path": "Sources/MacNTop/MenuBar/StatusBarIconRenderer.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "539dfe9701888627d8267a3836a69413bc0d4e5f7a159062619a8ea1abc8c369",
+        "entry_digest": "e8e6cda9594bf66ac44e626b87fd7db8f2dea414dd116b095551945eb461c899",
+        "owners": [
+          "macntop"
+        ]
+      },
+      {
+        "path": "Sources/MacNTop/Models/CPUMetrics.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "3e2ebd066e307a1b0178612368b135e0fda78fc15c9bf975a7e6d824bd3267ef",
+        "entry_digest": "0184fe63471301235e12136f46c80bcbedec03c841768d00c6c48f69c7fca7cb",
+        "owners": [
+          "macntop"
+        ]
+      },
+      {
+        "path": "Sources/MacNTop/Models/DiskMetrics.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "19115e6ad04974c38894c8bd822ff3326745376a05a310704d04dc4229d6f024",
+        "entry_digest": "d02471f9acc75e6924a9812884f4b8a6fb903fdb7a763a92c532027b503a2434",
+        "owners": [
+          "macntop"
+        ]
+      },
+      {
+        "path": "Sources/MacNTop/Models/GPUMetrics.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "6b20625f366bd1984dd418f857e8bd5f0f8c163c33086108ccbe960cdb730789",
+        "entry_digest": "1f593d4c913b95d241fa035e666ced3ae4f09231b48066a85e0a85a44ac2d192",
+        "owners": [
+          "macntop"
+        ]
+      },
+      {
+        "path": "Sources/MacNTop/Models/HistoricalData.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "3b88b8ec9442da43da0987d036aa058d143f08dd3cb5f3edb8ff90c544b214e6",
+        "entry_digest": "7e12d6bd2fee6f44e09b8c25e6ef6cf19f95a97fbb03bd753cc63e4954f6872d",
+        "owners": [
+          "macntop"
+        ]
+      },
+      {
+        "path": "Sources/MacNTop/Models/MemoryMetrics.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "0f2773be838e49f3ad21681630614c7681461241538b9cdff609e55affb2fc85",
+        "entry_digest": "c33f141bf896cc7056bf4b0cf84ac9f5202717a7cc01bd1826a420369763698c",
+        "owners": [
+          "macntop"
+        ]
+      },
+      {
+        "path": "Sources/MacNTop/Models/NetworkMetrics.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "31f635e9c187f8f024f0dbac7722eb0b393ebde1be677615aec8a20b855322dd",
+        "entry_digest": "d8eab378ac53a69fc5d51f2954fd6d7f783f36c785710a71a420e43c0186b314",
+        "owners": [
+          "macntop"
+        ]
+      },
+      {
+        "path": "Sources/MacNTop/Models/PowerMetrics.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "bcd9f07e8245cc7b0f6ee6fcad5c10943c13c8901b2d842c1a8c5190e8467bc6",
+        "entry_digest": "dd5585244485975cf92af7055ff56a65ee0724fa833f526f0c9f6437bb69b601",
+        "owners": [
+          "macntop"
+        ]
+      },
+      {
+        "path": "Sources/MacNTop/Models/ProcessMetrics.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "b57b19ce094f1c27883c9ed7fbe7ed2bfb4ad1f73af6fbec1f281c1083d9fed2",
+        "entry_digest": "6b3f725dad1e542f5a5c58a6f8f0d58aa8ec8349a7e69b4c13f1886611b43733",
+        "owners": [
+          "macntop"
+        ]
+      },
+      {
+        "path": "Sources/MacNTop/Models/SystemInfo.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "4e3520084f0261982c58f221bf5acea585a7faf5bc46b0770ef2f1a538affd6b",
+        "entry_digest": "84de0c21ac9903b6f92c96434fe396f436124ed58a88b4adad527a26bddbc86e",
+        "owners": [
+          "macntop"
+        ]
+      },
+      {
+        "path": "Sources/MacNTop/Models/ThermalMetrics.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "e3f6f88737ec2b0808e1e09731e0b0b6edabbbf594cf911b7deeba21abab56a9",
+        "entry_digest": "59e753abb1216db5363f537c7be6464812f5cad8447c86c94b6cff8da90cbef3",
+        "owners": [
+          "macntop"
+        ]
+      },
+      {
+        "path": "Sources/MacNTop/Services/CPUMonitor.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "00c76cd4f80be91f928fe868c2bcd579bd77bbf79cd5a0c0205dab98b4515f90",
+        "entry_digest": "fc7d9de67a36dd8d85321e80c5db5414f00ede8300c46894cc9dd56930e7a7e3",
+        "owners": [
+          "macntop"
+        ]
+      },
+      {
+        "path": "Sources/MacNTop/Services/DiskMonitor.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "74392f7febb0d5d437b05ef209948a2055430f09012ba7033d7faa0d0ba5f16d",
+        "entry_digest": "5eb4d0c5903bf6cd4756ae8e0537ada0582b0cb68c29aa1b23f5f6e5bac0f871",
+        "owners": [
+          "macntop"
+        ]
+      },
+      {
+        "path": "Sources/MacNTop/Services/GPUMonitor.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "110e0bd1b02a9a0722089361f7a531d9b655a6461f460863a34a0cfe12daf1d4",
+        "entry_digest": "eec0f87bd2443ffa97e86f30ced7eec6c29e34321f9f60470117f0698efa9e31",
+        "owners": [
+          "macntop"
+        ]
+      },
+      {
+        "path": "Sources/MacNTop/Services/MemoryMonitor.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "c6a96d70f0f50672b5bed571dafc525c4116b251c4d9a3687cd8e673d01cb145",
+        "entry_digest": "a4380c2bfc9d5d39d564d9e7926ec3408661fce089e5588f33a65d54ea7d8b26",
+        "owners": [
+          "macntop"
+        ]
+      },
+      {
+        "path": "Sources/MacNTop/Services/NetworkMonitor.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "a73790b51d5ff595912c929717d2d52253c7f2dcd5ea68b2d62ec3b6b2dc5257",
+        "entry_digest": "b5b2462fc64c420ef33c8ab912a31858056aedb5954e55fdd3fa4e164cfe347f",
+        "owners": [
+          "macntop"
+        ]
+      },
+      {
+        "path": "Sources/MacNTop/Services/PowerMonitor.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "ff75f261a450c92e4b1d76b0a18ab184baec716089ac2a13b71839fa645495e6",
+        "entry_digest": "de1b826049d718c23ae223630cdcc69772c5374c2e2e7133b0bc70f4ae7e49d0",
+        "owners": [
+          "macntop"
+        ]
+      },
+      {
+        "path": "Sources/MacNTop/Services/ProcessMonitor.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "ea8942f645187226338a1b9c81ef5dc074fa246992c52ad7a4dfa4fbe68f07b8",
+        "entry_digest": "50a5cff986d17f9c85e1a57b8d825f450f550f15059ed99f998ebfacd96d1c1d",
+        "owners": [
+          "macntop"
+        ]
+      },
+      {
+        "path": "Sources/MacNTop/Services/SystemInfoService.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "e7707c82c0cae5c5ab48cd7134a08a71ff0f9e1f3edac889544b8dba37b7a2ad",
+        "entry_digest": "df43f591cf6a47aeff6e76d97362a5530ee91e3394b26b98f51ed053dbffb491",
+        "owners": [
+          "macntop"
+        ]
+      },
+      {
+        "path": "Sources/MacNTop/Services/ThermalMonitor.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "54ce090dabc16250f2190910758baaff9e1da7ca3f3d2dc5ea4bdfd14ac595ac",
+        "entry_digest": "0659e89a04de1c45fad8d0865a9e0cf8cf30fadb23cefa201081c45332eaca4f",
+        "owners": [
+          "macntop"
+        ]
+      },
+      {
+        "path": "Sources/MacNTop/Utilities/ByteFormatter.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "68c9daafd55a190fb26e2a65f3be019855b09e5d25f568205dfa1e43f7ae5876",
+        "entry_digest": "400b39524de584cd51ac796d107f1b07b983b66f5cefb49a35850df8932b885b",
+        "owners": [
+          "macntop"
+        ]
+      },
+      {
+        "path": "Sources/MacNTop/Views/CPUView.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "8257241db582ae961b8abfa9d49b45ac2520bab3f1008aba422edc26abd51156",
+        "entry_digest": "1f30dea9b1d120645ca3bb6e4b6448a101fe2db7b957d115a58e48d860fc774c",
+        "owners": [
+          "macntop"
+        ]
+      },
+      {
+        "path": "Sources/MacNTop/Views/Components/CRTEffectView.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "f1ce32c1bd2e53448b4cf5ab98caa0f6cabb50419d98a595de9d1af2570a10b9",
+        "entry_digest": "974dc40e2896a8722b73bd76b8500225afed41352f86ca78de61c13ea2dc1f87",
+        "owners": [
+          "macntop"
+        ]
+      },
+      {
+        "path": "Sources/MacNTop/Views/Components/RetroTheme.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "fc4b8cd829e55448e717e61d0934a70f0ddc6dff93012bd31e6c91613b331c4d",
+        "entry_digest": "71d955f8dce2c700e3628d25ec245cd2152769957d4eac874ec1895eb94ece04",
+        "owners": [
+          "macntop"
+        ]
+      },
+      {
+        "path": "Sources/MacNTop/Views/Components/SparklineView.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "2c68acee65e721faf1604cf17d0fac013a07000e2d5ced01739dbeb7584f85af",
+        "entry_digest": "3dbb8c4cb2e6fd8fb940b1fd683b03a4c0cfe63b9fab71b6b0cec2988f86d097",
+        "owners": [
+          "macntop"
+        ]
+      },
+      {
+        "path": "Sources/MacNTop/Views/DashboardView.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "11a3920daa707ca199d3836dee2248eae9b1ae3c0b1fe616afd910b9dc35c0c9",
+        "entry_digest": "bc1f9d200f1e496ff5ecbe1bc17ab0c10c6dd3d9c50526a844fe21959065946a",
+        "owners": [
+          "macntop"
+        ]
+      },
+      {
+        "path": "Sources/MacNTop/Views/DashboardViewController.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "1da241fb3587b650103979cc61f0135460a5e89549fb40417b40d275c844374c",
+        "entry_digest": "9c7ed3cef8c4bfbf2775b056b2ee42fea9ea07298b23ecf68cce1d01087694d8",
+        "owners": [
+          "macntop"
+        ]
+      },
+      {
+        "path": "Sources/MacNTop/Views/DashboardWindow.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "2591b29a5486919c52ca012c86088327fdc486b148df364cf9c4595e3e9a92cb",
+        "entry_digest": "e493e8a143795fddf1b8c1036bc7c51906b5a65956822d6eaba5e92cb817260c",
+        "owners": [
+          "macntop"
+        ]
+      },
+      {
+        "path": "Sources/MacNTop/Views/DiskView.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "7a5fbe9401430f0880aec74bfd17ea399358ed17eead7ab276edb11b7f4b9cc6",
+        "entry_digest": "cad9464fe1f6e7e301d82363e269f13d38c9068b9a89ed2bed73129002f87028",
+        "owners": [
+          "macntop"
+        ]
+      },
+      {
+        "path": "Sources/MacNTop/Views/MemoryView.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "c5f3bbb19c898d859c401dce66c2be50783c7bfdeacea58ad3853f9df41578d4",
+        "entry_digest": "9d01a09ec4bf2f1622a77fb3ffd3fc088162c3353db9f135d2e96ab7a155345f",
+        "owners": [
+          "macntop"
+        ]
+      },
+      {
+        "path": "Sources/MacNTop/Views/NetworkView.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "accdc3e3c479ca3fb9f8888314a4ab068a8cb2544dbb7a35fc7bf50e388ad40b",
+        "entry_digest": "f2db9744f6e323f3e7ff315e2d896ddda76f6f07a2f6e04eb321e126f9c206fb",
+        "owners": [
+          "macntop"
+        ]
+      },
+      {
+        "path": "Sources/MacNTop/Views/ProcessListView.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "d00a7a9b2eed90da47bd12c96717ace28060a433eecf9d53cc6a3f991faae07d",
+        "entry_digest": "c2abca9f7188f12854a0df19597c85c402033bf83c9b1b38d45b24ee67ebe25f",
+        "owners": [
+          "macntop"
+        ]
+      },
+      {
+        "path": "Sources/MacNTop/Views/StaticInfoView.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "756e17c99c7ea11230ade2cca800cbc0541ff65de6e023136e187dc03c856891",
+        "entry_digest": "4da72bab7ce3fcca119f9896a1af250a7663fff0e9e22e0cb3a957afa938cc55",
+        "owners": [
+          "macntop"
+        ]
+      },
+      {
+        "path": "Sources/MacNTop/Views/SystemStatusView.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "9c080e14ef0bc4f0526b0d49f1cedecbd54494bb562e2296af4f95d829c0f646",
+        "entry_digest": "b82d559a2e9659336b6f43c8953cdc6fab1b552a452ef20779208e136f75a30b",
+        "owners": [
+          "macntop"
+        ]
+      },
+      {
+        "path": "Tests/MacNTopTests/ByteFormatterExtendedTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "b18b40ca8e3af1dce92db5273b9239debce707341cdeb1b14adde2b900c1ee97",
+        "entry_digest": "ce4138936ef5b08642cb7add81ee1720d7d6ff218c5b9ab0492bdcff2270c4e9",
+        "owners": [
+          "@exact:test"
+        ]
+      },
+      {
+        "path": "Tests/MacNTopTests/HistoricalDataExtendedTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "0d65e5be0037556460345ebb8c492c27bc9217c311971f11e4af6ea48fe41156",
+        "entry_digest": "0ea32af1a0756a44c04998359e4883027805be795dff939fdd9ef8fc4ace5e9a",
+        "owners": [
+          "@exact:test"
+        ]
+      },
+      {
+        "path": "Tests/MacNTopTests/ModelTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "9095ec01cb528ffbfb4ca765397f65676aff9e7371fa2f4e6082c3b8f689bce9",
+        "entry_digest": "0301a852a71c119435a290c8f8fe4eff3f1612ae7a9b990ab24982633446d627",
+        "owners": [
+          "@exact:test"
+        ]
+      },
+      {
+        "path": "Tests/MacNTopTests/ServiceTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "d5b607c0921c1a5924185a2d18a5f1577219ad85f8076dff2eed2652dc2aaaef",
+        "entry_digest": "86c66817ac66bba053bae87687b72a73bfde11f644a47fc772dd4ea378cb9091",
+        "owners": [
+          "@exact:test"
+        ]
+      },
+      {
+        "path": "fledge.toml",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "f702001690542c0da2f05b3b130f68006da358135cf4f55093e26e0b957849ca",
+        "entry_digest": "ded8b8e62812b7644cdec9fbb7f6941fbb4793188790806bccb55bd91b3994ed",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "specs/macntop/context.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "5eaab451b2439665e17037c54f4081456928faa974a3b2a19a515bb6fa648452",
+        "entry_digest": "8449b9954f7d960ac6efb7dacc8e5c7705b40f848dfbbb3fe86c9bc111956309",
+        "owners": [
+          "macntop"
+        ]
+      },
+      {
+        "path": "specs/macntop/macntop.spec.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "1c5b2561d6b7af196047024dc6e6463f824ef3d471f66b727dcb3cca50194aa2",
+        "entry_digest": "05c8a660956ac72c8d44d1323d25cac47d8e2772ab5cd709c3a404d670f3ce89",
+        "owners": [
+          "macntop"
+        ]
+      },
+      {
+        "path": "specs/macntop/requirements.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "8b2f478bbdfb36565db13d2d99d55fd31cc63366388137c3f2c2fccbab26c630",
+        "entry_digest": "6ffaa167d3bf11163f0c5937f4d6ee8a3e1bfc1ecb6fde0df6c2c0c92982867d",
+        "owners": [
+          "macntop"
+        ]
+      },
+      {
+        "path": "specs/macntop/tasks.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "f3313b5309661a62549d0eb79fe07225b1ab0c03556270f11d610b86b00f982b",
+        "entry_digest": "f81d0f1674699d67bfc05be483d2ec6ff8de28ce74dea505457a882d73e16d06",
+        "owners": [
+          "macntop"
+        ]
+      },
+      {
+        "path": "specs/macntop/testing.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "a1b963d464b8e37f15a3bd2829e5e9f8220566be1124ca57630f09814a32c1e7",
+        "entry_digest": "0a281cd9664f7ea68b1f37e03035171dbd3ded3834e0d202d76851e566d6592a",
+        "owners": [
+          "macntop"
+        ]
+      }
+    ]
+  },
   "passed": true,
   "commands": [
     {
