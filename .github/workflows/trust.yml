@@ -17,6 +17,6 @@ jobs:
         run: git fetch origin main:refs/remotes/origin/main
       - name: CorvidLabs Trust gate
         id: trust
-        uses: CorvidLabs/trust@fcc889f54d8b4892a81af463c5a0250e2be66fc5 # v1.2.0
+        uses: CorvidLabs/trust@dd52a7a90ffbc1d2b1030e37007c18274f3d96bc # v1.2.1
         with:
           range: ${{ github.event_name == 'pull_request' && format('{0}..{1}', github.event.pull_request.base.sha, github.event.pull_request.head.sha) || format('{0}..{1}', github.event.before, github.sha) }}
