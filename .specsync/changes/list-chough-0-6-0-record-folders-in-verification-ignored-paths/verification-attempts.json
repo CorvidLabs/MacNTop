@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "attempts": [
+    {
+      "timestamp": 1794580886,
+      "commit": "029ab39d69e5738ec6624b45bb946d61cf9ed55d",
+      "contract_digest": "42ec31f30c3d039573930acfc890afff0707853c80756e3b76e99e786bd5bcd0",
+      "workspace_digest": "d24d90438f40d0310a02b8fd2f36df59449cadd44b1d31232ae8f74811179f57",
+      "passed": true,
+      "commands": [
+        {
+          "command": "specsync check (no spec in scope)",
+          "success": true,
+          "exit_code": 0
+        }
+      ],
+      "requirement_ids": []
+    },
+    {
+      "timestamp": 1794580886,
+      "commit": "56fbe309f84f001e6e996bec1e771a13e0582ed1",
+      "contract_digest": "42ec31f30c3d039573930acfc890afff0707853c80756e3b76e99e786bd5bcd0",
+      "workspace_digest": "d24d90438f40d0310a02b8fd2f36df59449cadd44b1d31232ae8f74811179f57",
+      "passed": true,
+      "commands": [
+        {
+          "command": "specsync check (no spec in scope)",
+          "success": true,
+          "exit_code": 0
+        }
+      ],
+      "requirement_ids": []
+    },
+    {
+      "timestamp": 1794580888,
+      "commit": "8b4b3fda56be3af603a30e97c0fac9bbae7baa93",
+      "contract_digest": "42ec31f30c3d039573930acfc890afff0707853c80756e3b76e99e786bd5bcd0",
+      "workspace_digest": "d24d90438f40d0310a02b8fd2f36df59449cadd44b1d31232ae8f74811179f57",
+      "passed": true,
+      "commands": [
+        {
+          "command": "specsync check (no spec in scope)",
+          "success": true,
+          "exit_code": 0
+        }
+      ],
+      "requirement_ids": []
+    },
+    {
+      "timestamp": 1794580888,
+      "commit": "8b4b3fda56be3af603a30e97c0fac9bbae7baa93",
+      "contract_digest": "42ec31f30c3d039573930acfc890afff0707853c80756e3b76e99e786bd5bcd0",
+      "workspace_digest": "d24d90438f40d0310a02b8fd2f36df59449cadd44b1d31232ae8f74811179f57",
+      "acceptance_input_digest": "c040fe624848cee073a96fdb55f905576180fed84fb915299298c72af83430e8",
+      "acceptance_manifest": {
+        "schema_version": 1,
+        "entries": [
+          {
+            "path": ".specsync/sdd.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "472c338e618258dd3dd37006810621a5dcfd1f399be4e95991668261568e61fd",
+            "entry_digest": "799342bb6adf3b3e5ee4007331b9d06cb2cf3abd742ff0456bbee9b55df82187",
+            "owners": [
+              "@exact:delivery"
+            ]
+          }
+        ]
+      },
+      "passed": true,
+      "commands": [
+        {
+          "command": "specsync check (no spec in scope)",
+          "success": true,
+          "exit_code": 0
+        }
+      ],
+      "requirement_ids": []
+    }
+  ]
+}
