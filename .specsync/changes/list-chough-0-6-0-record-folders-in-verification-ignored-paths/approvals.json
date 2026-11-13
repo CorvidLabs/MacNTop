@@ -1,4 +1,14 @@
 {
-  "approvals": [],
+  "approvals": [
+    {
+      "gate": "definition",
+      "actor": "corvid-agent",
+      "timestamp": 1794580885,
+      "digest": "42ec31f30c3d039573930acfc890afff0707853c80756e3b76e99e786bd5bcd0",
+      "note": "Leif's scope approval for the record-folders ignored-paths change on each new tier-2 draft, given in chat to his Chief of Staff on 2026-11-12 at 9:41 PM MST (\"Resume the wider list; my SpecSync scope approval applies to each new draft\"). Recorded by corvid-agent; this is not 0xLeif's own signature.",
+      "approved_delta_digests": {},
+      "approved_delta_bases": {}
+    }
+  ],
   "reopenings": []
 }
